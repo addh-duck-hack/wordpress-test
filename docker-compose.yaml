@@ -23,12 +23,12 @@ services:
       # nueva) y vuelve a levantar el contenedor. Ver README.md.
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ALLOW_MULTISITE', true);
-        // define('MULTISITE', true);
-        // define('SUBDOMAIN_INSTALL', true);
-        // define('DOMAIN_CURRENT_SITE', '${WORDPRESS_DOMAIN}');
-        // define('PATH_CURRENT_SITE', '/');
-        // define('SITE_ID_CURRENT_SITE', 1);
-        // define('BLOG_ID_CURRENT_SITE', 1);
+        define('MULTISITE', true);
+        define('SUBDOMAIN_INSTALL', true);
+        define('DOMAIN_CURRENT_SITE', '${WORDPRESS_DOMAIN}');
+        define('PATH_CURRENT_SITE', '/');
+        define('SITE_ID_CURRENT_SITE', 1);
+        define('BLOG_ID_CURRENT_SITE', 1);
     # Sin "ports": NPM llega al contenedor por nombre dentro de la red "npm",
     # igual que en peajemexico. No se expone nada al host.
     networks:
