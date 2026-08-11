@@ -135,3 +135,12 @@ distintos con el mismo contenido de prueba, sin duplicar instalaciones.
 - Si más adelante algún prototipo necesita plugins/config muy distintos al
   resto, ese cliente puntual puede migrar a su propio contenedor
   (mismo patrón que tus otros proyectos WordPress independientes).
+- **Límite de subida de la Biblioteca de medios.** `uploads.ini` se monta
+  en `/usr/local/etc/php/conf.d/` (ver `docker-compose.yaml`) y sube
+  `upload_max_filesize`/`post_max_size` a 64M — ajusta ahí si necesitas
+  más. Pero si sigues topando con un límite de ~1MB después de subir esto
+  y reiniciar, revisa **Nginx Proxy Manager**: por defecto nginx limita
+  `client_max_body_size` a 1M. En el Proxy Host de este sitio, pestaña
+  *Advanced*, agrega algo como `client_max_body_size 64M;` en el bloque de
+  configuración personalizada (o súbelo en la config global de NPM si
+  quieres que aplique a todos los proxy hosts).

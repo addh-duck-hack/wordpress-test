@@ -8,6 +8,9 @@ services:
       # Temas versionados en el repo, uno por cliente/prototipo. El resto de
       # wp-content (uploads, plugins, cache, etc.) sigue en el volumen de arriba.
       - ./wp-content/themes:/var/www/html/wp-content/themes
+      # Límites de subida de PHP (upload_max_filesize/post_max_size, etc.)
+      # para la Biblioteca de medios — ver uploads.ini.
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
