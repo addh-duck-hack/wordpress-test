@@ -1,0 +1,46 @@
+services:
+  wordpress-multisite:
+    container_name: wordpress-multisite
+    image: wordpress:php8.3-apache
+    restart: always
+    volumes:
+      - wordpress_multisite_data:/var/www/html
+      # Temas versionados en el repo, uno por cliente/prototipo. El resto de
+      # wp-content (uploads, plugins, cache, etc.) sigue en el volumen de arriba.
+      - ./wp-content/themes:/var/www/html/wp-content/themes
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_TABLE_PREFIX: wp_
+      # --- FASE 1 (primer arranque) ---
+      # Deja solo WP_ALLOW_MULTISITE activo, instala WordPress normal
+      # y corre el asistente "Herramientas > Configuración de red".
+      # --- FASE 2 (después del asistente) ---
+      # Descomenta el resto de las líneas tal cual lo indica el propio
+      # asistente de WordPress (deberían coincidir con esto en una red
+      # nueva) y vuelve a levantar el contenedor. Ver README.md.
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ALLOW_MULTISITE', true);
+        // define('MULTISITE', true);
+        // define('SUBDOMAIN_INSTALL', true);
+        // define('DOMAIN_CURRENT_SITE', '${WORDPRESS_DOMAIN}');
+        // define('PATH_CURRENT_SITE', '/');
+        // define('SITE_ID_CURRENT_SITE', 1);
+        // define('BLOG_ID_CURRENT_SITE', 1);
+    # Sin "ports": NPM llega al contenedor por nombre dentro de la red "npm",
+    # igual que en peajemexico. No se expone nada al host.
+    networks:
+      - npm
+      - wordpress-multisite
+
+networks:
+  wordpress-multisite:
+    name: wordpress-multisite
+    driver: bridge
+  npm:
+    external: true
+
+volumes:
+  wordpress_multisite_data: {}
