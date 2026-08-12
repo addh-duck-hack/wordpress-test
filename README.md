@@ -39,7 +39,11 @@ cp .env.example .env
 
 Edita `.env` y rellena `WORDPRESS_DOMAIN`, `WORDPRESS_DB_USER`,
 `WORDPRESS_DB_PASSWORD`, `WORDPRESS_DB_NAME` con valores reales (usa una
-contraseña fuerte, no la del ejemplo).
+contraseña fuerte, no la del ejemplo), y `PROJECT_DIR` con la ruta absoluta
+donde quedó este `git clone` (por ejemplo `/home/jaco/docker/wordpress/wordpress-test`).
+`PROJECT_DIR` es lo que usan los bind mounts de temas y `uploads.ini` — si no
+coincide con la ruta real, `docker compose up` monta una carpeta vacía y los
+temas "desaparecen" aunque el `git pull` sí haya bajado los archivos.
 
 ### 2. Crear la base de datos y el usuario en el `mysql_db` compartido
 
@@ -129,6 +133,12 @@ distintos con el mismo contenido de prueba, sin duplicar instalaciones.
 
 ## Notas
 
+- **`PROJECT_DIR` en `.env` debe ser una ruta absoluta.** Los bind mounts de
+  `wp-content/themes` y `uploads.ini` en `docker-compose.yaml` la usan en vez
+  de una ruta relativa (`./...`) justamente para que `docker compose up/down`
+  funcione igual sin importar desde qué directorio lo ejecutes. Si mueves o
+  reclonas el repo a otra ruta, actualiza `PROJECT_DIR` antes de volver a
+  levantar el contenedor.
 - Nada de esto se ejecutó en este VPS: son solo los archivos de arranque.
   El `.env` con las claves reales se crea directamente en el servidor
   destino, nunca se sube al git.
