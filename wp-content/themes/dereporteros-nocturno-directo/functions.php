@@ -25,6 +25,13 @@ add_action( 'wp_enqueue_scripts', function () {
 		[ 'dereporteros-nocturno-directo-fonts' ],
 		wp_get_theme()->get( 'Version' )
 	);
+	wp_enqueue_script(
+		'dereporteros-nocturno-directo-ticker',
+		get_template_directory_uri() . '/js/ticker.js',
+		[],
+		wp_get_theme()->get( 'Version' ),
+		true
+	);
 } );
 
 /**
@@ -52,6 +59,24 @@ if ( ! function_exists( 'dereporteros_category_name' ) ) {
 	function dereporteros_category_name( $post_id ) {
 		$cats = get_the_category( $post_id );
 		return ! empty( $cats ) ? $cats[0]->name : 'General';
+	}
+}
+
+if ( ! function_exists( 'dereporteros_ticker_category_name' ) ) {
+	/**
+	 * Categoría a mostrar junto a cada nota del cintillo de última hora:
+	 * la primera categoría de la entrada que no sea "ultima-hora" (para
+	 * no repetir esa misma etiqueta), con fallback al nombre real de esa
+	 * categoría si la nota no tiene ninguna otra.
+	 */
+	function dereporteros_ticker_category_name( $post_id ) {
+		foreach ( get_the_category( $post_id ) as $cat ) {
+			if ( 'ultima-hora' !== $cat->slug ) {
+				return $cat->name;
+			}
+		}
+		$ultima_hora = get_category_by_slug( 'ultima-hora' );
+		return $ultima_hora ? $ultima_hora->name : 'Última hora';
 	}
 }
 
