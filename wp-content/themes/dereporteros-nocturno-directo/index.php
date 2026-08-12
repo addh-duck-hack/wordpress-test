@@ -10,40 +10,6 @@
  */
 get_header();
 
-/**
- * Hero de últimas 4 notas — solo en la portada (primera página), como
- * bloque independiente por encima del hero de abajo. Usa su propia
- * consulta para no pisar los posts que reparte el hero principal.
- */
-$dereporteros_hero_latest = new WP_Query( [
-	'posts_per_page'         => 4,
-	'ignore_sticky_posts'    => true,
-	'no_found_rows'          => true,
-	'update_post_meta_cache' => false,
-	'update_post_term_cache' => false,
-] );
-if ( is_front_page() && is_home() && ! is_paged() && $dereporteros_hero_latest->have_posts() ) :
-	$dereporteros_hl_slots = [ 'hl-a', 'hl-b', 'hl-c', 'hl-d' ];
-	?>
-<section class="hero-latest">
-	<?php
-	$dereporteros_hl_i = 0;
-	while ( $dereporteros_hero_latest->have_posts() ) : $dereporteros_hero_latest->the_post();
-		$dereporteros_hl_id = get_the_ID();
-		?>
-	<a class="hl-tile <?php echo esc_attr( $dereporteros_hl_slots[ $dereporteros_hl_i ] ); ?>" href="<?php the_permalink(); ?>">
-		<img src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_hl_id, 'large' ) ); ?>" alt="<?php the_title_attribute(); ?>">
-		<div class="hl-scrim"></div>
-		<div class="hl-body">
-			<span class="pill green"><?php echo esc_html( dereporteros_category_name( $dereporteros_hl_id ) ); ?></span>
-			<h3 class="hl-title"><?php the_title(); ?></h3>
-		</div>
-	</a>
-	<?php $dereporteros_hl_i++; endwhile; wp_reset_postdata(); ?>
-</section>
-<?php endif; ?>
-
-<?php
 global $wp_query;
 $queried_ids = wp_list_pluck( $wp_query->posts, 'ID' );
 $hero_id     = $queried_ids[0] ?? null;
@@ -100,6 +66,40 @@ $trend_ids   = array_slice( $queried_ids, 11, 4 );
 		</div>
 		<?php endforeach; wp_reset_postdata(); ?>
 	</div>
+</section>
+<?php endif; ?>
+
+<?php
+/**
+ * Hero de últimas 4 notas — después de "Metrópoli y México", como bloque
+ * independiente. Usa su propia consulta para no pisar los posts que
+ * reparte el hero principal de arriba.
+ */
+$dereporteros_hero_latest = new WP_Query( [
+	'posts_per_page'         => 4,
+	'ignore_sticky_posts'    => true,
+	'no_found_rows'          => true,
+	'update_post_meta_cache' => false,
+	'update_post_term_cache' => false,
+] );
+if ( is_front_page() && is_home() && ! is_paged() && $dereporteros_hero_latest->have_posts() ) :
+	$dereporteros_hl_slots = [ 'hl-a', 'hl-b', 'hl-c', 'hl-d' ];
+	?>
+<section class="hero-latest">
+	<?php
+	$dereporteros_hl_i = 0;
+	while ( $dereporteros_hero_latest->have_posts() ) : $dereporteros_hero_latest->the_post();
+		$dereporteros_hl_id = get_the_ID();
+		?>
+	<a class="hl-tile <?php echo esc_attr( $dereporteros_hl_slots[ $dereporteros_hl_i ] ); ?>" href="<?php the_permalink(); ?>">
+		<img src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_hl_id, 'large' ) ); ?>" alt="<?php the_title_attribute(); ?>">
+		<div class="hl-scrim"></div>
+		<div class="hl-body">
+			<span class="pill green"><?php echo esc_html( dereporteros_category_name( $dereporteros_hl_id ) ); ?></span>
+			<h3 class="hl-title"><?php the_title(); ?></h3>
+		</div>
+	</a>
+	<?php $dereporteros_hl_i++; endwhile; wp_reset_postdata(); ?>
 </section>
 <?php endif; ?>
 

@@ -96,6 +96,7 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .hl-d{grid-column:3;grid-row:2;}
 .hl-scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,8,5,0) 38%, rgba(5,7,4,.94) 100%);}
 .hl-body{position:absolute;left:0;right:0;bottom:0;padding:26px;display:flex;flex-direction:column;gap:10px;}
+.hl-body .pill{align-self:flex-start;}
 .hl-title{font-family:'Barlow',sans-serif;font-weight:800;color:#fff;margin:0;line-height:1.16;}
 .hl-a .hl-title{font-size:36px;max-width:22ch;}
 .hl-b .hl-title{font-size:23px;max-width:20ch;}
