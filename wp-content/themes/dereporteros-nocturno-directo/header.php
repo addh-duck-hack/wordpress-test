@@ -35,6 +35,9 @@ if ( $dereporteros_ticker->have_posts() ) : ?>
 
 <header class="site">
 	<div class="wrap">
+		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<img class="site-logo" src="<?php echo esc_url( get_template_directory_uri() . '/images/logo-dereporteros.png' ); ?>" alt="<?php bloginfo( 'name' ); ?>">
+		</a>
 		<?php
 		if ( has_nav_menu( 'primary' ) ) {
 			wp_nav_menu( [

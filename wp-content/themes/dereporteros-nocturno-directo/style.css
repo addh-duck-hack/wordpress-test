@@ -44,7 +44,11 @@ h1,h2,h3{font-family:'Barlow',sans-serif;margin:0;color:var(--text);}
 
 /* Header */
 header.site{padding:20px 0;border-bottom:1px solid var(--line);}
-header.site .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+/* Chip claro detrás del logo: el isotipo trae texto en negro sólido y se
+   pierde sobre el fondo oscuro del tema si se coloca directo. */
+.brand{display:inline-flex;align-items:center;flex-shrink:0;background:#fff;padding:6px 14px;border-radius:8px;}
+.site-logo{height:26px;width:auto;display:block;}
 .main-nav{display:flex;gap:24px;flex-wrap:wrap;}
 .main-nav a{font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.02em;color:var(--text-soft);}
 .main-nav a.active,.main-nav a:hover{color:var(--text);}

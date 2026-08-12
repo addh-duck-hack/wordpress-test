@@ -45,7 +45,9 @@ h1,h2,h3{font-family:'Barlow',sans-serif;margin:0;color:var(--ink);}
 
 /* Header */
 header.site{padding:20px 0;border-bottom:1px solid var(--line);}
-header.site .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+.brand{display:flex;align-items:center;flex-shrink:0;}
+.site-logo{height:32px;width:auto;display:block;}
 .main-nav{display:flex;gap:24px;flex-wrap:wrap;}
 .main-nav a{font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.02em;color:var(--ink);}
 .main-nav a.active,.main-nav a:hover{color:var(--green);}
