@@ -25,13 +25,6 @@ add_action( 'wp_enqueue_scripts', function () {
 		[ 'dereporteros-bento-claro-fonts' ],
 		wp_get_theme()->get( 'Version' )
 	);
-	wp_enqueue_script(
-		'dereporteros-bento-claro-ticker',
-		get_template_directory_uri() . '/js/ticker.js',
-		[],
-		wp_get_theme()->get( 'Version' ),
-		true
-	);
 } );
 
 /**
