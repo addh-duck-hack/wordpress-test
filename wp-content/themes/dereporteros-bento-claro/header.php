@@ -14,16 +14,16 @@
 
 <?php
 /**
- * Cintillo "Última hora": solo notas de la categoría "ultima-hora"
- * publicadas en las últimas 48 horas. Si no hay ninguna, el cintillo no
- * se imprime (queda solo la navbar dentro del wrapper sticky).
+ * Cintillo "Última hora": solo la nota más reciente de la categoría
+ * "ultima-hora" publicada en las últimas 48 horas. Si no hay ninguna, el
+ * cintillo no se imprime (queda solo la navbar dentro del wrapper sticky).
  */
 $dereporteros_ticker = new WP_Query( [
 	'category_name'           => 'ultima-hora',
 	'date_query'               => [ [ 'after' => '2 days ago' ] ],
 	'orderby'                  => 'date',
 	'order'                    => 'DESC',
-	'posts_per_page'           => 6,
+	'posts_per_page'           => 1,
 	'ignore_sticky_posts'      => true,
 	'no_found_rows'            => true,
 	'update_post_meta_cache'   => false,
@@ -41,6 +41,7 @@ $dereporteros_ticker = new WP_Query( [
 				<a class="ticker-item" href="<?php the_permalink(); ?>" aria-label="<?php the_title_attribute(); ?>">
 					<span class="ticker-cat" aria-hidden="true"><?php echo esc_html( dereporteros_ticker_category_name( get_the_ID() ) ); ?></span>
 					<b class="ticker-title" aria-hidden="true"><?php the_title(); ?></b>
+					<span class="ticker-body" aria-hidden="true"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 20 ) ); ?></span>
 				</a>
 			<?php endwhile; wp_reset_postdata(); ?>
 		</div>
