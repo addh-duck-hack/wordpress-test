@@ -1,0 +1,123 @@
+/*
+Theme Name: De Reporteros — Bento Claro
+Theme URI: https://tudominio.com
+Author: Duck Hack
+Author URI: https://duck-hack.com
+Description: Propuesta de tema para dereporteros.com — hero tipo "bento" asimétrico (estructura de Panorama) con la piel clara y cálida de Moderno Equilibrado.
+Version: 1.0
+Requires at least: 6.0
+Requires PHP: 8.0
+Text Domain: dereporteros-bento-claro
+*/
+
+:root{
+  --paper:#FFFFFF;
+  --panel:#F4F6F5;
+  --panel-hi:#ECF1EE;
+  --line:#E4E7E5;
+  --ink:#161A18;
+  --ink-soft:#5D6663;
+  --green:#1F6B3B;
+  --green-deep:#123822;
+  --alert:#C23B3B;
+  --radius:10px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px;}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3{font-family:'Barlow',sans-serif;margin:0;color:var(--ink);}
+.mono{font-family:'JetBrains Mono',monospace;}
+.pill{display:inline-flex;align-items:center;font-family:'Inter',sans-serif;font-weight:700;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border-radius:3px;color:#fff;}
+.pill.green{background:var(--green);}
+.pill.alert{background:var(--alert);}
+.meta-mono{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.03em;color:var(--ink-soft);text-transform:uppercase;}
+
+/* Ticker */
+.ticker{background:var(--green-deep);color:#fff;}
+.ticker .wrap{display:flex;align-items:center;height:42px;gap:16px;}
+.ticker .badge{background:var(--alert);font-family:'Barlow',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:.05em;padding:5px 10px;border-radius:3px;flex-shrink:0;}
+.ticker .items{display:flex;gap:28px;font-size:13px;color:#DCE8E1;overflow:hidden;white-space:nowrap;}
+.ticker .items a{opacity:.85;}
+.ticker .items b{color:#fff;font-weight:600;opacity:1;}
+
+/* Header */
+header.site{padding:20px 0;border-bottom:1px solid var(--line);}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.main-nav{display:flex;gap:24px;flex-wrap:wrap;}
+.main-nav a{font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.02em;color:var(--ink);}
+.main-nav a.active,.main-nav a:hover{color:var(--green);}
+.subscribe{background:var(--green);color:#fff;font-family:'Barlow',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;padding:10px 18px;border-radius:24px;}
+
+/* Bento hero (estructura de Panorama, piel clara de Moderno) */
+.bento{padding:32px 0;}
+.bento-grid{display:grid;grid-template-columns:1.6fr 1fr;grid-template-rows:auto auto;gap:16px;}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;position:relative;}
+.tile-hero{grid-row:span 2;display:flex;flex-direction:column;}
+.tile-hero .imgwrap{height:300px;position:relative;}
+.tile-hero .imgwrap img{width:100%;height:100%;object-fit:cover;}
+.tile-hero .imgwrap::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(18,56,34,0) 40%, rgba(18,56,34,.88) 100%);}
+.tile-hero .imgwrap .pill{position:absolute;left:20px;bottom:20px;}
+.tile-hero .body{padding:22px;}
+.tile-hero h1{font-size:32px;line-height:1.12;font-weight:800;margin:10px 0 10px;}
+.tile-hero .dek{font-size:14.5px;color:var(--ink-soft);margin-bottom:12px;max-width:52ch;}
+
+.tile-stat{padding:22px;display:flex;flex-direction:column;justify-content:center;background:var(--green-deep);border-color:var(--green-deep);}
+.tile-stat .num{font-family:'Barlow',sans-serif;font-weight:800;font-size:42px;color:#fff;line-height:1;}
+.tile-stat .lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#9FD6B4;margin-top:8px;}
+
+.tile-mini{padding:20px;display:flex;flex-direction:column;height:100%;}
+.tile-mini h3{font-size:16px;line-height:1.3;color:var(--ink);margin:10px 0 12px;font-weight:700;}
+.tile-mini p{font-size:13px;color:var(--ink-soft);margin:0 0 14px;flex:1;}
+
+/* Card grid */
+.section-block{padding:14px 0 34px;}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;}
+.section-head h2{font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;}
+.section-head .mono{color:var(--ink-soft);font-size:11px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+.card .imgwrap{height:128px;}
+.card .imgwrap img{width:100%;height:100%;object-fit:cover;}
+.card .body{padding:14px;}
+.card h3{font-size:15px;line-height:1.3;font-weight:700;margin:8px 0 0;}
+
+/* Two column lower */
+.lower{display:grid;grid-template-columns:2fr 1fr;gap:32px;padding:10px 0 46px;}
+.feed-row{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center;}
+.feed-row .time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);width:52px;flex-shrink:0;}
+.feed-row h3{font-size:16.5px;line-height:1.32;font-weight:700;margin-bottom:4px;}
+.feed-row .sec{font-size:11.5px;color:var(--ink-soft);}
+
+.trend-card{background:var(--green-deep);border-radius:var(--radius);padding:22px;color:#fff;}
+.trend-card h2{font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:#9FD6B4;margin-bottom:16px;}
+.trend-card p{font-size:13px;color:#B9D9C6;}
+.trend-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.12);align-items:flex-start;}
+.trend-item .n{font-family:'Barlow',sans-serif;font-weight:800;font-size:20px;color:#3FA363;width:26px;flex-shrink:0;}
+.trend-item h3{font-size:14.5px;line-height:1.35;font-weight:600;color:#fff;}
+.trend-item:last-child{border-bottom:none;}
+
+/* Footer */
+footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px;padding-bottom:26px;border-bottom:1px solid rgba(255,255,255,.12);}
+.foot-grid p{font-size:13px;line-height:1.6;color:#9FB6A8;}
+.foot-col h4{font-family:'Barlow',sans-serif;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:#fff;margin:0 0 12px;}
+.foot-col a{display:block;font-size:13.5px;color:#B9CFC1;margin-bottom:8px;}
+.foot-bottom{display:flex;justify-content:space-between;padding-top:18px;font-size:12px;color:#7FA08D;flex-wrap:wrap;gap:8px;}
+
+/* Single post */
+.single-wrap{max-width:760px;margin:0 auto;padding:40px 28px 70px;}
+.single-wrap h1{font-size:34px;line-height:1.15;margin:14px 0 12px;}
+.single-wrap .meta-mono{display:block;margin-bottom:22px;}
+.single-wrap .featured{border-radius:var(--radius);overflow:hidden;margin-bottom:26px;}
+.single-wrap .content{font-size:16px;line-height:1.75;color:var(--ink);}
+.single-wrap .content p{margin:0 0 20px;}
+.back-link{display:inline-block;margin-bottom:18px;font-size:13px;font-weight:700;color:var(--green);}
+
+@media (max-width:900px){
+  .bento-grid,.grid-4{grid-template-columns:1fr;}
+  .lower{grid-template-columns:1fr;}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+}
