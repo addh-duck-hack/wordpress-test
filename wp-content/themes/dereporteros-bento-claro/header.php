@@ -42,21 +42,21 @@ $dereporteros_ticker = new WP_Query( [
 				$dereporteros_ticker->the_post();
 				$dereporteros_ticker_cat   = dereporteros_ticker_category_name( get_the_ID() );
 				$dereporteros_ticker_title = get_the_title();
-				$dereporteros_ticker_meta  = sprintf( 'hace %s', human_time_diff( get_the_time( 'U' ) ) );
 				$dereporteros_ticker_body  = wp_trim_words( get_the_excerpt(), 20 );
 				// Marquesina más larga = recorrido más lento, para que la
 				// velocidad de lectura se sienta parecida sin importar el texto.
-				$dereporteros_ticker_speed = max( 16, (int) round( mb_strlen( $dereporteros_ticker_cat . $dereporteros_ticker_title . $dereporteros_ticker_meta . $dereporteros_ticker_body ) * 0.09 ) );
+				$dereporteros_ticker_speed = max( 16, (int) round( mb_strlen( $dereporteros_ticker_body ) * 0.12 ) );
 				?>
-				<a class="ticker-item" href="<?php the_permalink(); ?>" aria-label="<?php echo esc_attr( $dereporteros_ticker_title ); ?>">
-					<span class="ticker-marquee" aria-hidden="true" style="--marquee-duration: <?php echo esc_attr( $dereporteros_ticker_speed ); ?>s;">
+				<a class="ticker-item" href="<?php the_permalink(); ?>">
+					<span class="ticker-static">
 						<span class="ticker-cat"><?php echo esc_html( $dereporteros_ticker_cat ); ?></span>
 						<span class="ticker-sep">·</span>
 						<b class="ticker-title"><?php echo esc_html( $dereporteros_ticker_title ); ?></b>
-						<span class="ticker-sep">·</span>
-						<span class="ticker-meta"><?php echo esc_html( $dereporteros_ticker_meta ); ?></span>
-						<span class="ticker-sep">·</span>
-						<span class="ticker-body"><?php echo esc_html( $dereporteros_ticker_body ); ?></span>
+					</span>
+					<span class="ticker-marquee-wrap">
+						<span class="ticker-marquee" aria-hidden="true" style="--marquee-duration: <?php echo esc_attr( $dereporteros_ticker_speed ); ?>s;">
+							<span class="ticker-body"><?php echo esc_html( $dereporteros_ticker_body ); ?></span>
+						</span>
 					</span>
 				</a>
 			<?php endwhile; wp_reset_postdata(); ?>
