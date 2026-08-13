@@ -44,11 +44,24 @@ $dereporteros_nota_dia_query = new WP_Query( [
 ] );
 $dereporteros_nota_dia_id = $dereporteros_nota_dia_query->posts[0]->ID ?? null;
 
+/**
+ * Sección "Portada" (grid-4): solo notas de la categoría "metropoli",
+ * independiente de la consulta general de abajo.
+ */
+$dereporteros_metropoli_query = new WP_Query( [
+	'category_name'           => 'metropoli',
+	'posts_per_page'          => 4,
+	'ignore_sticky_posts'     => true,
+	'no_found_rows'           => true,
+	'update_post_meta_cache'  => false,
+	'update_post_term_cache'  => false,
+] );
+$grid_ids = wp_list_pluck( $dereporteros_metropoli_query->posts, 'ID' );
+
 global $wp_query;
 $queried_ids = wp_list_pluck( $wp_query->posts, 'ID' );
-$grid_ids    = array_slice( $queried_ids, 0, 4 );
-$feed_ids    = array_slice( $queried_ids, 4, 4 );
-$trend_ids   = array_slice( $queried_ids, 8, 4 );
+$feed_ids    = array_slice( $queried_ids, 0, 4 );
+$trend_ids   = array_slice( $queried_ids, 4, 4 );
 ?>
 
 <?php if ( $hero_id ) : ?>
@@ -213,10 +226,10 @@ if ( $dereporteros_personas_query->have_posts() ) :
 <?php
 /**
  * Hero de últimas 4 notas — después de "Portada", como bloque
- * independiente. Usa su propia consulta para no pisar los posts que
- * reparte el bento hero de arriba.
+ * independiente. Solo notas de la categoría "espectaculos".
  */
 $dereporteros_hero_latest = new WP_Query( [
+	'category_name'          => 'espectaculos',
 	'posts_per_page'         => 4,
 	'ignore_sticky_posts'    => true,
 	'no_found_rows'          => true,
