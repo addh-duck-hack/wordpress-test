@@ -54,19 +54,12 @@ function dereporteros_category_name( $post_id ) {
 }
 
 /**
- * Categoría a mostrar junto a cada nota del cintillo de última hora: la
- * primera categoría de la entrada que no sea "ultima-hora" (para no
- * repetir esa misma etiqueta), con fallback al nombre real de esa
- * categoría si la nota no tiene ninguna otra.
+ * Categoría a mostrar junto a cada nota del cintillo de última hora.
+ * "ultima-hora" es una etiqueta (no categoría), así que ya no hay
+ * necesidad de excluir nada: se reutiliza el nombre de categoría normal.
  */
 function dereporteros_ticker_category_name( $post_id ) {
-	foreach ( get_the_category( $post_id ) as $cat ) {
-		if ( 'ultima-hora' !== $cat->slug ) {
-			return $cat->name;
-		}
-	}
-	$ultima_hora = get_category_by_slug( 'ultima-hora' );
-	return $ultima_hora ? $ultima_hora->name : 'Última hora';
+	return dereporteros_category_name( $post_id );
 }
 
 /**

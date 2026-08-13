@@ -11,11 +11,11 @@
 get_header();
 
 /**
- * Hero principal: solo notas de la categoría "portada" (curaduría manual
+ * Hero principal: solo notas con la etiqueta "portada" (curaduría manual
  * de qué va arriba), independiente de la consulta general de abajo.
  */
 $dereporteros_portada_query = new WP_Query( [
-	'category_name'           => 'portada',
+	'tag'                      => 'portada',
 	'posts_per_page'          => 4,
 	'ignore_sticky_posts'     => true,
 	'no_found_rows'           => true,

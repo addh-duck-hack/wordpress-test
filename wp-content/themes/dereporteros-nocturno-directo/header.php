@@ -14,12 +14,12 @@
 
 <?php
 /**
- * Cintillo "Última hora": solo la nota más reciente de la categoría
+ * Cintillo "Última hora": solo la nota más reciente con la etiqueta
  * "ultima-hora" publicada en las últimas 48 horas. Si no hay ninguna, el
  * cintillo no se imprime (queda solo la navbar dentro del wrapper sticky).
  */
 $dereporteros_ticker = new WP_Query( [
-	'category_name'           => 'ultima-hora',
+	'tag'                      => 'ultima-hora',
 	'date_query'               => [ [ 'after' => '2 days ago' ] ],
 	'orderby'                  => 'date',
 	'order'                    => 'DESC',
