@@ -26,6 +26,24 @@ $dereporteros_portada_ids = wp_list_pluck( $dereporteros_portada_query->posts, '
 $hero_id                  = $dereporteros_portada_ids[0] ?? null;
 $mini_id                  = $dereporteros_portada_ids[1] ?? null;
 
+/**
+ * Nota del día: la nota más reciente con la etiqueta "nota-del-dia". Se
+ * calcula aquí (antes del bento hero) para poder excluirla de la
+ * recomendación aleatoria de abajo; se imprime más adelante, justo
+ * después del hero, como bloque propio de alta visibilidad.
+ */
+$dereporteros_nota_dia_query = new WP_Query( [
+	'tag'                     => 'nota-del-dia',
+	'posts_per_page'          => 1,
+	'orderby'                 => 'date',
+	'order'                   => 'DESC',
+	'ignore_sticky_posts'     => true,
+	'no_found_rows'           => true,
+	'update_post_meta_cache'  => false,
+	'update_post_term_cache'  => false,
+] );
+$dereporteros_nota_dia_id = $dereporteros_nota_dia_query->posts[0]->ID ?? null;
+
 global $wp_query;
 $queried_ids = wp_list_pluck( $wp_query->posts, 'ID' );
 $grid_ids    = array_slice( $queried_ids, 0, 4 );
@@ -56,7 +74,7 @@ $trend_ids   = array_slice( $queried_ids, 8, 4 );
 		$dereporteros_recommend_query = new WP_Query( [
 			'posts_per_page'         => 1,
 			'orderby'                => 'rand',
-			'post__not_in'           => array_filter( [ $hero_id, $mini_id ] ),
+			'post__not_in'           => array_filter( [ $hero_id, $mini_id, $dereporteros_nota_dia_id ] ),
 			'ignore_sticky_posts'    => true,
 			'no_found_rows'          => true,
 			'update_post_meta_cache' => false,
@@ -90,6 +108,28 @@ $trend_ids   = array_slice( $queried_ids, 8, 4 );
 	</div>
 </section>
 <?php endif; ?>
+
+<?php if ( $dereporteros_nota_dia_id ) : $post = get_post( $dereporteros_nota_dia_id ); setup_postdata( $post ); ?>
+<section class="nota-dia wrap">
+	<div class="nota-dia-card">
+		<div class="nota-dia-media">
+			<img src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_nota_dia_id, 'large' ) ); ?>" alt="<?php the_title_attribute(); ?>">
+		</div>
+		<div class="nota-dia-body">
+			<div class="nota-dia-top">
+				<span class="nota-dia-badge">Nota del día</span>
+				<span class="pill <?php echo esc_attr( dereporteros_pill_class( 0 ) ); ?>"><?php echo esc_html( dereporteros_category_name( $dereporteros_nota_dia_id ) ); ?></span>
+			</div>
+			<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+			<p class="dek"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 32 ) ); ?></p>
+			<div class="nota-dia-foot">
+				<span class="meta-mono"><?php the_author(); ?> · hace <?php echo esc_html( human_time_diff( get_the_time( 'U' ) ) ); ?></span>
+				<a class="nota-dia-cta" href="<?php the_permalink(); ?>">Leer nota completa →</a>
+			</div>
+		</div>
+	</div>
+</section>
+<?php endif; wp_reset_postdata(); ?>
 
 <?php if ( $grid_ids ) : ?>
 <section class="section-block wrap">
