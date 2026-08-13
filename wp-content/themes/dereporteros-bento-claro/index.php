@@ -111,23 +111,20 @@ $trend_ids   = array_slice( $queried_ids, 8, 4 );
 
 <?php if ( $dereporteros_nota_dia_id ) : $post = get_post( $dereporteros_nota_dia_id ); setup_postdata( $post ); ?>
 <section class="nota-dia wrap">
-	<div class="nota-dia-card">
-		<div class="nota-dia-media">
-			<img src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_nota_dia_id, 'large' ) ); ?>" alt="<?php the_title_attribute(); ?>">
-		</div>
-		<div class="nota-dia-body">
-			<div class="nota-dia-top">
-				<span class="nota-dia-badge">Nota del día</span>
-				<span class="pill <?php echo esc_attr( dereporteros_pill_class( 0 ) ); ?>"><?php echo esc_html( dereporteros_category_name( $dereporteros_nota_dia_id ) ); ?></span>
-			</div>
-			<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-			<p class="dek"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 32 ) ); ?></p>
+	<a class="nota-dia-card" href="<?php the_permalink(); ?>">
+		<img class="nota-dia-img" src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_nota_dia_id, 'large' ) ); ?>" alt="<?php the_title_attribute(); ?>">
+		<div class="nota-dia-scrim"></div>
+		<span class="nota-dia-ribbon"><span aria-hidden="true">★</span> Nota del día</span>
+		<div class="nota-dia-content">
+			<span class="pill <?php echo esc_attr( dereporteros_pill_class( 0 ) ); ?>"><?php echo esc_html( dereporteros_category_name( $dereporteros_nota_dia_id ) ); ?></span>
+			<h2 class="nota-dia-title"><?php the_title(); ?></h2>
+			<p class="nota-dia-dek"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 30 ) ); ?></p>
 			<div class="nota-dia-foot">
 				<span class="meta-mono"><?php the_author(); ?> · hace <?php echo esc_html( human_time_diff( get_the_time( 'U' ) ) ); ?></span>
-				<a class="nota-dia-cta" href="<?php the_permalink(); ?>">Leer nota completa →</a>
+				<span class="nota-dia-cta">Leer nota completa →</span>
 			</div>
 		</div>
-	</div>
+	</a>
 </section>
 <?php endif; wp_reset_postdata(); ?>
 
