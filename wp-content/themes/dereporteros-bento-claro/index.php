@@ -10,13 +10,27 @@
  */
 get_header();
 
+/**
+ * Hero principal: solo notas de la categoría "portada" (curaduría manual
+ * de qué va arriba), independiente de la consulta general de abajo.
+ */
+$dereporteros_portada_query = new WP_Query( [
+	'category_name'           => 'portada',
+	'posts_per_page'          => 2,
+	'ignore_sticky_posts'     => true,
+	'no_found_rows'           => true,
+	'update_post_meta_cache'  => false,
+	'update_post_term_cache'  => false,
+] );
+$dereporteros_portada_ids = wp_list_pluck( $dereporteros_portada_query->posts, 'ID' );
+$hero_id                  = $dereporteros_portada_ids[0] ?? null;
+$mini_id                  = $dereporteros_portada_ids[1] ?? null;
+
 global $wp_query;
 $queried_ids = wp_list_pluck( $wp_query->posts, 'ID' );
-$hero_id     = $queried_ids[0] ?? null;
-$mini_id     = $queried_ids[1] ?? null;
-$grid_ids    = array_slice( $queried_ids, 2, 4 );
-$feed_ids    = array_slice( $queried_ids, 6, 4 );
-$trend_ids   = array_slice( $queried_ids, 10, 4 );
+$grid_ids    = array_slice( $queried_ids, 0, 4 );
+$feed_ids    = array_slice( $queried_ids, 4, 4 );
+$trend_ids   = array_slice( $queried_ids, 8, 4 );
 ?>
 
 <?php if ( $hero_id ) : ?>
@@ -138,7 +152,7 @@ if ( is_front_page() && is_home() && ! is_paged() && $dereporteros_hero_latest->
 </section>
 <?php endif; ?>
 
-<?php if ( ! $hero_id ) : ?>
+<?php if ( ! $hero_id && empty( $queried_ids ) ) : ?>
 <div class="wrap" style="padding:70px 0;text-align:center;color:var(--ink-soft);">
 	<p>Todavía no hay entradas publicadas en este sitio.</p>
 </div>
