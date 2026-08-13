@@ -108,19 +108,28 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .tile-hero{grid-row:span 2;display:flex;flex-direction:column;}
 .tile-hero .imgwrap{height:300px;position:relative;}
 .tile-hero .imgwrap img{width:100%;height:100%;object-fit:cover;}
-.tile-hero .imgwrap::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(18,56,34,0) 40%, rgba(18,56,34,.88) 100%);}
 .tile-hero .imgwrap .pill{position:absolute;left:20px;bottom:20px;}
 .tile-hero .body{padding:22px;}
 .tile-hero h1{font-size:32px;line-height:1.12;font-weight:800;margin:10px 0 10px;}
 .tile-hero .dek{font-size:14.5px;color:var(--ink-soft);margin-bottom:12px;max-width:52ch;}
 
+/* Tile de fecha + recomendación aleatoria */
 .tile-stat{padding:22px;display:flex;flex-direction:column;justify-content:center;background:var(--green-deep);border-color:var(--green-deep);}
-.tile-stat .num{font-family:'Barlow',sans-serif;font-weight:800;font-size:42px;color:#fff;line-height:1;}
-.tile-stat .lbl{font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#9FD6B4;margin-top:8px;}
+.stat-date{font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#9FD6B4;}
+.stat-lead{font-family:'Barlow',sans-serif;font-weight:800;font-size:21px;color:#fff;margin:6px 0 18px;}
+.stat-rec{display:block;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);}
+.stat-rec-title{display:block;font-family:'Barlow',sans-serif;font-weight:700;font-size:15px;line-height:1.35;color:#fff;margin-bottom:8px;}
+.stat-rec-meta{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.03em;color:#9FD6B4;}
 
-.tile-mini{padding:20px;display:flex;flex-direction:column;height:100%;}
-.tile-mini h3{font-size:16px;line-height:1.3;color:var(--ink);margin:10px 0 12px;font-weight:700;}
-.tile-mini p{font-size:13px;color:var(--ink-soft);margin:0 0 14px;flex:1;}
+/* Tile mini: imagen de fondo con degradado (más oscuro abajo) y texto encima */
+.tile-mini{position:relative;padding:0;overflow:hidden;height:100%;background:var(--panel-hi);}
+.tile-mini img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.tile-mini-scrim{position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,12,10,0) 22%, rgba(8,10,8,.92) 100%);}
+.tile-mini-body{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;padding:20px;justify-content:flex-end;}
+.tile-mini-body .pill{align-self:flex-start;}
+.tile-mini-body h3{font-size:16px;line-height:1.3;color:#fff;margin:10px 0 8px;font-weight:700;}
+.tile-mini-body p{font-size:13px;color:rgba(255,255,255,.82);margin:0 0 10px;}
+.tile-mini-body .meta-mono{color:rgba(255,255,255,.65);}
 
 /* Card grid */
 .section-block{padding:14px 0 34px;}

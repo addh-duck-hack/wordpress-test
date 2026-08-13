@@ -50,17 +50,40 @@ $trend_ids   = array_slice( $queried_ids, 8, 4 );
 			</div>
 		</div>
 
+		<?php
+		// Recomendación aleatoria para el tile de fecha: cualquier nota que
+		// no sea la que ya se muestra en el hero o en el tile de al lado.
+		$dereporteros_recommend_query = new WP_Query( [
+			'posts_per_page'         => 1,
+			'orderby'                => 'rand',
+			'post__not_in'           => array_filter( [ $hero_id, $mini_id ] ),
+			'ignore_sticky_posts'    => true,
+			'no_found_rows'          => true,
+			'update_post_meta_cache' => false,
+		] );
+		$dereporteros_recommend_id = $dereporteros_recommend_query->posts[0]->ID ?? null;
+		?>
 		<div class="tile tile-stat">
-			<div class="num"><?php echo esc_html( dereporteros_stat_number() ); ?></div>
-			<div class="lbl">Notas publicadas esta semana</div>
+			<span class="stat-date">Hoy, <?php echo esc_html( dereporteros_fecha_hoy() ); ?></span>
+			<span class="stat-lead">Te recomendamos leer</span>
+			<?php if ( $dereporteros_recommend_id ) : ?>
+			<a class="stat-rec" href="<?php echo esc_url( get_permalink( $dereporteros_recommend_id ) ); ?>">
+				<span class="stat-rec-title"><?php echo esc_html( get_the_title( $dereporteros_recommend_id ) ); ?></span>
+				<span class="stat-rec-meta">hace <?php echo esc_html( human_time_diff( get_post_time( 'U', false, $dereporteros_recommend_id ) ) ); ?></span>
+			</a>
+			<?php endif; ?>
 		</div>
 
 		<?php if ( $mini_id ) : $post = get_post( $mini_id ); setup_postdata( $post ); ?>
 		<div class="tile tile-mini">
-			<span class="pill <?php echo esc_attr( dereporteros_pill_class( 1 ) ); ?>"><?php echo esc_html( dereporteros_category_name( $mini_id ) ); ?></span>
-			<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-			<p><?php echo esc_html( wp_trim_words( get_the_excerpt(), 18 ) ); ?></p>
-			<span class="meta-mono">Actualizado hace <?php echo esc_html( human_time_diff( get_the_time( 'U' ) ) ); ?></span>
+			<img src="<?php echo esc_url( dereporteros_thumb_src( $mini_id, 'medium' ) ); ?>" alt="<?php the_title_attribute(); ?>">
+			<div class="tile-mini-scrim"></div>
+			<div class="tile-mini-body">
+				<span class="pill <?php echo esc_attr( dereporteros_pill_class( 1 ) ); ?>"><?php echo esc_html( dereporteros_category_name( $mini_id ) ); ?></span>
+				<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+				<p><?php echo esc_html( wp_trim_words( get_the_excerpt(), 18 ) ); ?></p>
+				<span class="meta-mono">Actualizado hace <?php echo esc_html( human_time_diff( get_the_time( 'U' ) ) ); ?></span>
+			</div>
 		</div>
 		<?php endif; wp_reset_postdata(); ?>
 

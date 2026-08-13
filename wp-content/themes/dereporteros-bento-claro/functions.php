@@ -87,21 +87,24 @@ function dereporteros_thumb_src( $post_id, $size = 'medium' ) {
 }
 
 /**
- * Notas publicadas en los últimos 7 días (para el bloque de estadística
- * del hero); si no hay ninguna reciente, cae al total de publicadas.
+ * Fecha de hoy en español ("12 de agosto"), con los nombres de mes escritos
+ * a mano en vez de depender del locale configurado en WordPress — el resto
+ * del tema ya maneja sus textos en español así, sin i18n.
  */
-function dereporteros_stat_number() {
-	$q = new WP_Query( [
-		'post_type'      => 'post',
-		'post_status'    => 'publish',
-		'date_query'     => [ [ 'after' => '1 week ago' ] ],
-		'posts_per_page' => -1,
-		'fields'         => 'ids',
-		'no_found_rows'  => true,
-	] );
-	$count = count( $q->posts );
-	if ( $count === 0 ) {
-		$count = (int) wp_count_posts()->publish;
-	}
-	return sprintf( '%02d', $count );
+function dereporteros_fecha_hoy() {
+	$meses = [
+		1 => 'enero',
+		2 => 'febrero',
+		3 => 'marzo',
+		4 => 'abril',
+		5 => 'mayo',
+		6 => 'junio',
+		7 => 'julio',
+		8 => 'agosto',
+		9 => 'septiembre',
+		10 => 'octubre',
+		11 => 'noviembre',
+		12 => 'diciembre',
+	];
+	return sprintf( '%d de %s', (int) current_time( 'j' ), $meses[ (int) current_time( 'n' ) ] );
 }
