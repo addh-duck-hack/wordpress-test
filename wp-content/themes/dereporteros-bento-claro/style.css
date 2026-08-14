@@ -58,7 +58,11 @@ h1,h2,h3{font-family:'Barlow',sans-serif;margin:0;color:var(--ink);}
 .ticker-body{color:#DCE8E1;font-weight:400;font-size:13px;}
 
 @keyframes ticker-scroll{
-  0%{transform:translateX(100%);}
+  /* Arranca desplazado solo un 40% de su propio ancho (no 100%): así el
+     texto entra casi de inmediato en vez de tardar varios segundos en
+     asomar desde muy a la derecha. Sigue saliendo del todo por la
+     izquierda al terminar (-100%). */
+  0%{transform:translateX(40%);}
   100%{transform:translateX(-100%);}
 }
 @media (prefers-reduced-motion: reduce){
