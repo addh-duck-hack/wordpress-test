@@ -4,7 +4,7 @@ Theme URI: https://tudominio.com
 Author: Duck Hack
 Author URI: https://duck-hack.com
 Description: Propuesta de tema para dereporteros.com — hero tipo "bento" asimétrico (estructura de Panorama) con la piel clara y cálida de Moderno Equilibrado.
-Version: 1.7
+Version: 1.8
 Requires at least: 6.0
 Requires PHP: 8.0
 Text Domain: dereporteros-bento-claro
@@ -188,6 +188,7 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .ad-banner{padding:6px 28px 34px;}
 .ad-banner-label{display:block;color:var(--ink-soft);font-size:10.5px;letter-spacing:.05em;margin-bottom:8px;}
 .ad-banner-img{width:100%;height:auto;border-radius:var(--radius);display:block;}
+.ad-banner a{display:block;}
 
 /* Carousel "Personas Desaparecidas" — acento rojo (distinto del verde del
    resto del sitio) para señalar que es contenido urgente/sensible. */
@@ -258,6 +259,7 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .ad-slot{position:sticky;top:20px;}
 .ad-slot-label{display:block;color:var(--ink-soft);font-size:10.5px;letter-spacing:.05em;margin-bottom:8px;}
 .ad-slot-img{width:100%;height:auto;border-radius:var(--radius);display:block;}
+.ad-slot a{display:block;}
 
 /* Footer */
 footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}

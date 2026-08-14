@@ -1,19 +1,33 @@
 <?php
 /**
- * Componente: espacio publicitario estático. A diferencia de las demás
- * secciones no se alimenta de una categoría/etiqueta, así que en vez de
- * 'source'/'title' recibe la imagen y el texto de la etiqueta pequeña.
+ * Componente: espacio publicitario horizontal, dinámico. Cada anuncio es
+ * una nota normal con la etiqueta $args['source']: su imagen destacada es
+ * el creativo del banner y el primer link en su contenido es el destino
+ * del anuncio. Se muestra la nota más reciente con esa etiqueta; si no hay
+ * ninguna, la sección no se imprime.
  *
  * $args:
- *   'image' (string) — URL de la imagen del banner.
- *   'label' (string) — texto pequeño mostrado sobre la imagen (transparencia).
+ *   'source' (string) — slug de la etiqueta a consultar.
+ *   'label'  (string) — texto pequeño mostrado sobre la imagen (transparencia).
  */
 $dereporteros_ad_args = wp_parse_args( $args ?? [], [
-	'image' => get_template_directory_uri() . '/images/publicidad-banner.png',
-	'label' => 'Publicidad',
+	'source' => 'publicidad1',
+	'label'  => 'Publicidad',
 ] );
-?>
+
+$dereporteros_ad_id = dereporteros_latest_id_by_tag( $dereporteros_ad_args['source'] );
+
+if ( $dereporteros_ad_id ) :
+	$dereporteros_ad_link = dereporteros_first_link_in_content( $dereporteros_ad_id );
+	?>
 <section class="ad-banner wrap">
 	<span class="ad-banner-label mono"><?php echo esc_html( $dereporteros_ad_args['label'] ); ?></span>
-	<img class="ad-banner-img" src="<?php echo esc_url( $dereporteros_ad_args['image'] ); ?>" alt="Espacio publicitario disponible — aquí te puedes anunciar" loading="lazy">
+	<?php if ( $dereporteros_ad_link ) : ?>
+	<a href="<?php echo esc_url( $dereporteros_ad_link ); ?>" target="_blank" rel="noopener sponsored">
+		<img class="ad-banner-img" src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_ad_id, 'large' ) ); ?>" alt="Espacio publicitario">
+	</a>
+	<?php else : ?>
+	<img class="ad-banner-img" src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_ad_id, 'large' ) ); ?>" alt="Espacio publicitario">
+	<?php endif; ?>
 </section>
+<?php endif; ?>

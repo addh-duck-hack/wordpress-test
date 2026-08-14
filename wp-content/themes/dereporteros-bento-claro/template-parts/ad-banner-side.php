@@ -1,20 +1,33 @@
 <?php
 /**
- * Componente: espacio publicitario vertical, pensado para la columna
- * angosta de una sección de dos columnas (p. ej. junto a "Más leídas").
- * Igual que ad-banner.php, no se alimenta de categoría/etiqueta: recibe
- * la imagen y el texto de la etiqueta pequeña.
+ * Componente: espacio publicitario vertical, dinámico. Igual que
+ * ad-banner.php pero para la columna angosta de una sección de dos
+ * columnas (p. ej. junto a "Más leídas"): la nota más reciente con la
+ * etiqueta $args['source'] aporta la imagen destacada como creativo y el
+ * primer link de su contenido como destino del anuncio.
  *
  * $args:
- *   'image' (string) — URL de la imagen del banner.
- *   'label' (string) — texto pequeño mostrado sobre la imagen (transparencia).
+ *   'source' (string) — slug de la etiqueta a consultar.
+ *   'label'  (string) — texto pequeño mostrado sobre la imagen (transparencia).
  */
 $dereporteros_ad_side_args = wp_parse_args( $args ?? [], [
-	'image' => get_template_directory_uri() . '/images/publicidad-banner-vertical.png',
-	'label' => 'Publicidad',
+	'source' => 'publicidad2',
+	'label'  => 'Publicidad',
 ] );
-?>
+
+$dereporteros_ad_side_id = dereporteros_latest_id_by_tag( $dereporteros_ad_side_args['source'] );
+
+if ( $dereporteros_ad_side_id ) :
+	$dereporteros_ad_side_link = dereporteros_first_link_in_content( $dereporteros_ad_side_id );
+	?>
 <div class="ad-slot">
 	<span class="ad-slot-label mono"><?php echo esc_html( $dereporteros_ad_side_args['label'] ); ?></span>
-	<img class="ad-slot-img" src="<?php echo esc_url( $dereporteros_ad_side_args['image'] ); ?>" alt="Espacio publicitario disponible — aquí te puedes anunciar" loading="lazy">
+	<?php if ( $dereporteros_ad_side_link ) : ?>
+	<a href="<?php echo esc_url( $dereporteros_ad_side_link ); ?>" target="_blank" rel="noopener sponsored">
+		<img class="ad-slot-img" src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_ad_side_id, 'large' ) ); ?>" alt="Espacio publicitario">
+	</a>
+	<?php else : ?>
+	<img class="ad-slot-img" src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_ad_side_id, 'large' ) ); ?>" alt="Espacio publicitario">
+	<?php endif; ?>
 </div>
+<?php endif; ?>

@@ -147,6 +147,20 @@ function dereporteros_has_tagged_posts( $tag ) {
 }
 
 /**
+ * Primer link encontrado en el cuerpo de una nota, o cadena vacía si no
+ * tiene ninguno. Usado por los espacios publicitarios dinámicos: la nota
+ * que alimenta el banner trae, en su contenido, el link real de destino
+ * del anuncio (a donde sea que el anunciante quiera mandar al usuario).
+ */
+function dereporteros_first_link_in_content( $post_id ) {
+	$content = get_post_field( 'post_content', $post_id );
+	if ( $content && preg_match( '/<a\s[^>]*href=["\']([^"\']+)["\']/i', $content, $matches ) ) {
+		return esc_url_raw( $matches[1] );
+	}
+	return '';
+}
+
+/**
  * Alterna la clase de color del pill (verde/alerta) según posición,
  * solo para variedad visual entre tarjetas.
  */
