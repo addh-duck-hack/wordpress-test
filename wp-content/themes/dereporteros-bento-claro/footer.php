@@ -26,8 +26,8 @@
 		</div>
 	</div>
 	<div class="wrap foot-bottom">
-		<span>© <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. El contenido de este sitio es responsabilidad y derecho exclusivo de <?php bloginfo( 'name' ); ?>.</span>
-		<span>Diseño © <a href="https://mx.duck-hack.cloud" target="_blank" rel="noopener">Duck-Hack</a>. Todos los derechos de diseño reservados.</span>
+		<span>© <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. Todos los derechos del contenido reservados.</span>
+		<span>Designed by <a href="https://mx.duck-hack.cloud" target="_blank" rel="noopener">Duck-Hack</a></span>
 	</div>
 </footer>
 
