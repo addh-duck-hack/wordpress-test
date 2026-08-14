@@ -75,6 +75,16 @@ $dereporteros_has_hero    = dereporteros_has_tagged_posts( 'portada' );
 </section>
 <?php endif; ?>
 
+<?php get_template_part( 'template-parts/grid-section', null, [
+	'source' => 'seguridad',
+	'title'  => 'Seguridad',
+] ); ?>
+
+<?php get_template_part( 'template-parts/grid-section', null, [
+	'source' => 'clima',
+	'title'  => 'Clima',
+] ); ?>
+
 <?php if ( ! $dereporteros_has_hero && empty( $queried_ids ) ) : ?>
 <div class="wrap" style="padding:70px 0;text-align:center;color:var(--ink-soft);">
 	<p>Todavía no hay entradas publicadas en este sitio.</p>

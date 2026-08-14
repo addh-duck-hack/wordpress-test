@@ -17,7 +17,7 @@ $dereporteros_feed_args = wp_parse_args( $args ?? [], [
 if ( $dereporteros_feed_args['ids'] ) :
 	?>
 <div class="feed-col">
-	<div class="section-head"><h2><?php echo esc_html( $dereporteros_feed_args['title'] ); ?></h2><span class="mono">En vivo</span></div>
+	<div class="section-head"><h2><?php echo esc_html( $dereporteros_feed_args['title'] ); ?></h2></div>
 	<?php foreach ( $dereporteros_feed_args['ids'] as $id ) : $post = get_post( $id ); setup_postdata( $post ); ?>
 	<div class="feed-row">
 		<div class="feed-thumb"><img src="<?php echo esc_url( dereporteros_thumb_src( $id, 'thumbnail' ) ); ?>" alt="<?php the_title_attribute(); ?>"></div>
