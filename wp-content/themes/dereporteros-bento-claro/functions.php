@@ -12,6 +12,27 @@ add_action( 'after_setup_theme', function () {
 	] );
 } );
 
+/**
+ * Oculta en todo el sitio (frontend) las notas de la categoría
+ * "sin-categoria" — típicamente entradas a las que nunca se les asignó una
+ * categoría real. Se aplica a nivel de pre_get_posts en vez de en cada
+ * WP_Query del tema para que funcione igual en el cintillo, el hero, los
+ * grids, el carousel, etc. sin tener que repetir la exclusión en cada uno.
+ */
+add_action( 'pre_get_posts', function ( $query ) {
+	if ( is_admin() ) {
+		return;
+	}
+	$sin_categoria = get_category_by_slug( 'sin-categoria' );
+	if ( ! $sin_categoria ) {
+		return;
+	}
+	$excluded   = $query->get( 'category__not_in' );
+	$excluded   = $excluded ? (array) $excluded : [];
+	$excluded[] = $sin_categoria->term_id;
+	$query->set( 'category__not_in', array_unique( $excluded ) );
+} );
+
 add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style(
 		'dereporteros-bento-claro-fonts',
