@@ -13,7 +13,7 @@
 		</div>
 		<div class="foot-col">
 			<h4>Más</h4>
-			<?php foreach ( get_pages() as $dereporteros_page ) : ?>
+			<?php foreach ( get_pages( [ 'sort_column' => 'post_date', 'sort_order' => 'DESC' ] ) as $dereporteros_page ) : ?>
 				<a href="<?php echo esc_url( get_permalink( $dereporteros_page ) ); ?>"><?php echo esc_html( $dereporteros_page->post_title ); ?></a>
 			<?php endforeach; ?>
 		</div>
