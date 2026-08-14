@@ -11,12 +11,17 @@
  *   'title'   (string) — título de la sección.
  *   'random'  (bool)   — true: 4 notas al azar, sin "Ver más". Default false.
  *   'exclude' (int[])  — IDs a excluir de la consulta (ej. la entrada actual).
+ *   'narrow'  (bool)   — true: ancho de columna de artículo (760px, 2 por
+ *                        fila) en vez del ancho completo (1240px, 4 por
+ *                        fila) — para cuando el bloque va debajo de un
+ *                        cuerpo de texto angosto (ej. single.php). Default false.
  */
 $dereporteros_grid_args = wp_parse_args( $args ?? [], [
 	'source'  => 'metropoli',
 	'title'   => 'Metrópoli',
 	'random'  => false,
 	'exclude' => [],
+	'narrow'  => false,
 ] );
 
 $dereporteros_grid_query_args = [
@@ -41,7 +46,7 @@ $dereporteros_grid_link = $dereporteros_grid_cat ? get_category_link( $dereporte
 
 if ( $grid_ids ) :
 	?>
-<section class="section-block wrap">
+<section class="section-block wrap<?php echo $dereporteros_grid_args['narrow'] ? ' is-narrow' : ''; ?>">
 	<div class="section-head">
 		<h2><?php echo ( $dereporteros_grid_args['random'] || is_home() || is_front_page() ) ? esc_html( $dereporteros_grid_args['title'] ) : esc_html( get_the_archive_title() ); ?></h2>
 		<?php if ( $dereporteros_grid_link ) : ?>

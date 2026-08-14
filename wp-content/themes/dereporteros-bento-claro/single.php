@@ -80,6 +80,7 @@ get_template_part( 'template-parts/grid-section', null, [
 	'title'   => 'Recomendado para ti',
 	'random'  => true,
 	'exclude' => [ get_the_ID() ],
+	'narrow'  => true,
 ] );
 get_template_part( 'template-parts/comments' );
 ?>
