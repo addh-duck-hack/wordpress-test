@@ -23,8 +23,14 @@ Text Domain: dereporteros-bento-claro
   --radius:10px;
 }
 *{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+html,body{margin:0;padding:0;height:100%;}
+/* Footer pegado abajo: body es una columna flex de altura mínima igual al
+   viewport; .site-main (header.php/footer.php) crece para ocupar el
+   espacio sobrante cuando el contenido de la página es corto (ej. páginas
+   estáticas cortas como /directorio/), empujando el footer al fondo en
+   vez de dejarlo flotando a media pantalla. */
+body{display:flex;flex-direction:column;min-height:100%;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+.site-main{flex:1 0 auto;}
 img{max-width:100%;display:block;}
 .wrap{max-width:1240px;margin:0 auto;padding:0 28px;}
 a{color:inherit;text-decoration:none;}
