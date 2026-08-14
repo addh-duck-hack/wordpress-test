@@ -11,10 +11,11 @@
  *   'title'   (string) — título de la sección.
  *   'random'  (bool)   — true: 4 notas al azar, sin "Ver más". Default false.
  *   'exclude' (int[])  — IDs a excluir de la consulta (ej. la entrada actual).
- *   'narrow'  (bool)   — true: ancho de columna de artículo (760px, 2 por
+ *   'narrow'  (bool)   — true: ancho de columna de artículo (760px, 3 por
  *                        fila) en vez del ancho completo (1240px, 4 por
  *                        fila) — para cuando el bloque va debajo de un
  *                        cuerpo de texto angosto (ej. single.php). Default false.
+ *   'count'   (int)    — cuántas notas traer/mostrar. Default 4.
  */
 $dereporteros_grid_args = wp_parse_args( $args ?? [], [
 	'source'  => 'metropoli',
@@ -22,10 +23,11 @@ $dereporteros_grid_args = wp_parse_args( $args ?? [], [
 	'random'  => false,
 	'exclude' => [],
 	'narrow'  => false,
+	'count'   => 4,
 ] );
 
 $dereporteros_grid_query_args = [
-	'posts_per_page'          => 4,
+	'posts_per_page'          => $dereporteros_grid_args['count'],
 	'ignore_sticky_posts'     => true,
 	'no_found_rows'           => true,
 	'update_post_meta_cache'  => false,

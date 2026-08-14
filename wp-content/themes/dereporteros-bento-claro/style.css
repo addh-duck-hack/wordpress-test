@@ -253,10 +253,10 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .section-block{padding-top:14px;padding-bottom:34px;}
 /* Modificador para cuando el grid va debajo de un cuerpo de texto angosto
    (ej. "Recomendado para ti" en single.php): mismo ancho que el artículo
-   en vez del ancho completo de 1240px, y 2 columnas en vez de 4 para que
-   las tarjetas no queden apachurradas. */
+   en vez del ancho completo de 1240px, y 3 columnas en vez de 4 —a este
+   ancho entran cómodas en una sola fila, sin apachurrarse. */
 .section-block.is-narrow{max-width:760px;}
-.section-block.is-narrow .grid-4{grid-template-columns:repeat(2,1fr);}
+.section-block.is-narrow .grid-4{grid-template-columns:repeat(3,1fr);}
 .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;}
 .section-head h2{font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;}
 .section-head .mono{color:var(--ink-soft);font-size:11px;}

@@ -81,6 +81,7 @@ get_template_part( 'template-parts/grid-section', null, [
 	'random'  => true,
 	'exclude' => [ get_the_ID() ],
 	'narrow'  => true,
+	'count'   => 3,
 ] );
 get_template_part( 'template-parts/comments' );
 ?>
