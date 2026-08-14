@@ -292,10 +292,28 @@ footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}
 .single-wrap{max-width:760px;margin:0 auto;padding:40px 28px 70px;}
 .single-wrap h1{font-size:34px;line-height:1.15;margin:14px 0 12px;}
 .single-wrap .meta-mono{display:block;margin-bottom:22px;}
-.single-wrap .featured{border-radius:var(--radius);overflow:hidden;margin-bottom:26px;}
 .single-wrap .content{font-size:16px;line-height:1.75;color:var(--ink);}
 .single-wrap .content p{margin:0 0 20px;}
-.back-link{display:inline-block;margin-bottom:18px;font-size:13px;font-weight:700;color:var(--green);}
+
+/* Cabecera de la entrada superpuesta sobre la imagen destacada: categoría,
+   título, autor y fecha van encima de la foto con un scrim en degradado que
+   deja ver la imagen a ~70% (máximo 30% de opacidad oscura) para que los
+   datos no se pierdan sin tapar la foto. */
+.single-featured{position:relative;border-radius:var(--radius);overflow:hidden;margin-bottom:26px;}
+.single-featured-img{width:100%;height:clamp(280px, 46vw, 460px);object-fit:cover;}
+.single-featured-scrim{position:absolute;inset:0;background:linear-gradient(0deg, rgba(6,9,7,.3) 0%, rgba(6,9,7,.12) 55%, rgba(6,9,7,0) 100%);}
+.single-featured-content{position:absolute;left:0;right:0;bottom:0;padding:26px 24px 22px;}
+.single-featured-content .pill{margin-bottom:10px;}
+.single-featured-content h1{margin:0 0 10px;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.45);}
+.single-featured-content .meta-mono{display:block;margin-bottom:0;color:rgba(255,255,255,.85);text-shadow:0 1px 6px rgba(0,0,0,.45);}
+
+/* Barra "Compartir": botones a redes sociales + correo, debajo de la
+   imagen destacada de la entrada. */
+.share-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 32px;padding-bottom:26px;border-bottom:1px solid var(--line);}
+.share-label{margin-right:2px;}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:30px;border:1px solid var(--line);font-family:'Inter',sans-serif;font-weight:700;font-size:12.5px;color:var(--ink-soft);transition:background .15s ease,border-color .15s ease,color .15s ease;}
+.share-btn svg{width:15px;height:15px;flex-shrink:0;}
+.share-btn:hover{background:var(--green);border-color:var(--green);color:#fff;}
 
 @media (max-width:900px){
   /* Cintillo "última hora": en móvil no cabe categoría + título + extracto
@@ -314,6 +332,13 @@ footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}
   /* El extracto amontona la tarjeta en pantallas chicas: en móvil solo se
      muestra título + categoría + CTA. */
   .nota-dia-dek{display:none;}
+
+  .single-featured-img{height:clamp(220px, 62vw, 340px);}
+  .single-featured-content{padding:18px 18px 16px;}
+  .single-featured-content h1{font-size:24px;}
+
+  .share-bar{gap:8px;}
+  .share-btn{padding:7px 12px;font-size:12px;}
 
   /* Header: el logo + botón hamburguesa quedan en la barra; el nav y las
      redes sociales se pliegan en un panel debajo que se abre con el botón.
