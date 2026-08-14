@@ -29,20 +29,58 @@ add_action( 'wp_enqueue_scripts', function () {
 
 /**
  * Menú de respaldo cuando no se ha asignado un menú en Apariencia > Menús:
- * lista las categorías existentes para que la nav nunca se vea vacía.
+ * "Inicio" primero (destacado en verde) y, después, las categorías con las
+ * notas más recientes, para que la nav siempre refleje lo que está activo
+ * en el sitio en vez de un orden fijo.
  */
 function dereporteros_bento_claro_nav_fallback() {
 	echo '<nav class="main-nav">';
-	$cats = get_categories( [ 'number' => 6, 'hide_empty' => false ] );
-	foreach ( $cats as $i => $cat ) {
+	printf(
+		'<a class="active" href="%s">%s</a>',
+		esc_url( home_url( '/' ) ),
+		esc_html__( 'Inicio', 'dereporteros-bento-claro' )
+	);
+	foreach ( dereporteros_recent_categories( 4 ) as $cat ) {
 		printf(
-			'<a class="%s" href="%s">%s</a>',
-			$i === 0 ? 'active' : '',
+			'<a href="%s">%s</a>',
 			esc_url( get_category_link( $cat ) ),
 			esc_html( $cat->name )
 		);
 	}
 	echo '</nav>';
+}
+
+/**
+ * Las $limit categorías con las notas más recientes, en orden de
+ * recencia (no alfabético ni por cantidad de notas): recorre las últimas
+ * entradas publicadas y va tomando la primera categoría de cada una hasta
+ * juntar $limit categorías distintas.
+ */
+function dereporteros_recent_categories( $limit = 4 ) {
+	$query = new WP_Query( [
+		'posts_per_page'          => 20,
+		'orderby'                 => 'date',
+		'order'                   => 'DESC',
+		'ignore_sticky_posts'     => true,
+		'no_found_rows'           => true,
+		'update_post_meta_cache'  => false,
+	] );
+
+	$cats = [];
+	foreach ( $query->posts as $recent_post ) {
+		$post_cats = get_the_category( $recent_post->ID );
+		if ( empty( $post_cats ) ) {
+			continue;
+		}
+		$cat = $post_cats[0];
+		if ( ! isset( $cats[ $cat->term_id ] ) ) {
+			$cats[ $cat->term_id ] = $cat;
+		}
+		if ( count( $cats ) >= $limit ) {
+			break;
+		}
+	}
+	return array_values( $cats );
 }
 
 /**

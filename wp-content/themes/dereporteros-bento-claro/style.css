@@ -4,7 +4,7 @@ Theme URI: https://tudominio.com
 Author: Duck Hack
 Author URI: https://duck-hack.com
 Description: Propuesta de tema para dereporteros.com — hero tipo "bento" asimétrico (estructura de Panorama) con la piel clara y cálida de Moderno Equilibrado.
-Version: 1.5
+Version: 1.7
 Requires at least: 6.0
 Requires PHP: 8.0
 Text Domain: dereporteros-bento-claro
@@ -73,7 +73,10 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .main-nav{display:flex;gap:24px;flex-wrap:wrap;}
 .main-nav a{font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.02em;color:var(--ink);}
 .main-nav a.active,.main-nav a:hover{color:var(--green);}
-.subscribe{background:var(--green);color:#fff;font-family:'Barlow',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;padding:10px 18px;border-radius:24px;}
+.social-nav{display:flex;gap:14px;align-items:center;flex-shrink:0;}
+.social-nav a{display:flex;color:var(--ink-soft);transition:color .15s ease;}
+.social-nav a:hover{color:var(--green);}
+.social-nav svg{width:20px;height:20px;}
 
 /* Hero — últimas 4 notas (a=grande, b=mediana, c/d=apiladas a la derecha) */
 .hero-latest{
@@ -245,17 +248,16 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 /* Two column lower */
 .lower{display:grid;grid-template-columns:2fr 1fr;gap:32px;padding:10px 0 46px;}
 .feed-row{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center;}
-.feed-row .time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);width:52px;flex-shrink:0;}
+.feed-thumb{width:76px;height:76px;border-radius:10px;overflow:hidden;flex-shrink:0;}
+.feed-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.feed-row-body{min-width:0;}
+.feed-row .time{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);margin-bottom:3px;}
 .feed-row h3{font-size:16.5px;line-height:1.32;font-weight:700;margin-bottom:4px;}
 .feed-row .sec{font-size:11.5px;color:var(--ink-soft);}
 
-.trend-card{background:var(--green-deep);border-radius:var(--radius);padding:22px;color:#fff;}
-.trend-card h2{font-size:14px;text-transform:uppercase;letter-spacing:.05em;color:#9FD6B4;margin-bottom:16px;}
-.trend-card p{font-size:13px;color:#B9D9C6;}
-.trend-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.12);align-items:flex-start;}
-.trend-item .n{font-family:'Barlow',sans-serif;font-weight:800;font-size:20px;color:#3FA363;width:26px;flex-shrink:0;}
-.trend-item h3{font-size:14.5px;line-height:1.35;font-weight:600;color:#fff;}
-.trend-item:last-child{border-bottom:none;}
+.ad-slot{position:sticky;top:20px;}
+.ad-slot-label{display:block;color:var(--ink-soft);font-size:10.5px;letter-spacing:.05em;margin-bottom:8px;}
+.ad-slot-img{width:100%;height:auto;border-radius:var(--radius);display:block;}
 
 /* Footer */
 footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}
@@ -277,6 +279,7 @@ footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}
 @media (max-width:900px){
   .bento-grid,.grid-4{grid-template-columns:1fr;}
   .lower{grid-template-columns:1fr;}
+  .ad-slot{position:static;max-width:260px;margin:0 auto;}
   .foot-grid{grid-template-columns:1fr 1fr;}
 
   .nota-dia-card{height:clamp(380px, 72vh, 480px);border-radius:12px;}

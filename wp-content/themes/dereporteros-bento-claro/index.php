@@ -15,11 +15,10 @@ get_header();
 
 // Consulta general de la portada (la que WordPress ya resuelve para este
 // template): lo que sobra después del hero/nota del día/carousel/grid
-// alimenta las últimas dos columnas de abajo, que no tienen categoría propia.
+// alimenta la columna "Más leídas" de abajo, que no tiene categoría propia.
 global $wp_query;
 $queried_ids = wp_list_pluck( $wp_query->posts, 'ID' );
 $feed_ids    = array_slice( $queried_ids, 0, 4 );
-$trend_ids   = array_slice( $queried_ids, 4, 4 );
 
 // Se calcula aparte (antes del hero) solo para poder excluir esta nota de
 // la recomendación aleatoria del hero; el componente de "Nota del día" hace
@@ -61,11 +60,14 @@ $dereporteros_has_hero    = dereporteros_has_tagged_posts( 'portada' );
 	'title'  => 'Fotografía',
 ] ); ?>
 
-<?php if ( $feed_ids || $trend_ids ) : ?>
+<?php if ( $feed_ids ) : ?>
 <section class="lower wrap">
 	<?php
-	get_template_part( 'template-parts/latest-feed', null, [ 'title' => 'Últimas noticias', 'ids' => $feed_ids ] );
-	get_template_part( 'template-parts/trending', null, [ 'title' => 'Más leídas', 'ids' => $trend_ids ] );
+	get_template_part( 'template-parts/latest-feed', null, [ 'title' => 'Más leídas', 'ids' => $feed_ids ] );
+	get_template_part( 'template-parts/ad-banner-side', null, [
+		'image' => get_template_directory_uri() . '/images/publicidad-banner-vertical.png',
+		'label' => 'Publicidad',
+	] );
 	?>
 </section>
 <?php endif; ?>
