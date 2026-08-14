@@ -51,7 +51,7 @@ $dereporteros_found = (int) $wp_query->found_posts;
 			<div class="imgwrap"><img src="<?php echo esc_url( dereporteros_thumb_src( get_the_ID(), 'medium' ) ); ?>" alt="<?php the_title_attribute(); ?>"></div>
 			<div class="body">
 				<span class="meta-mono">hace <?php echo esc_html( human_time_diff( get_the_time( 'U' ) ) ); ?></span>
-				<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+				<h3><a class="card-link" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 			</div>
 		</div>
 		<?php endwhile; ?>

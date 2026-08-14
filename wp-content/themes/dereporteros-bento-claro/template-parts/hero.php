@@ -36,12 +36,12 @@ if ( $hero_id ) :
 		<div class="tile tile-hero">
 			<div class="imgwrap">
 				<img src="<?php echo esc_url( dereporteros_thumb_src( $hero_id, 'large' ) ); ?>" alt="<?php the_title_attribute(); ?>">
-				<span class="pill <?php echo esc_attr( dereporteros_pill_class( 0 ) ); ?>"><?php echo esc_html( dereporteros_category_name( $hero_id ) ); ?></span>
+				<a class="pill <?php echo esc_attr( dereporteros_pill_class( 0 ) ); ?>" href="<?php echo esc_url( dereporteros_category_link( $hero_id ) ); ?>"><?php echo esc_html( dereporteros_category_name( $hero_id ) ); ?></a>
 			</div>
 			<div class="body">
-				<h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
+				<h1><a class="tile-hero-link" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
 				<p class="dek"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 26 ) ); ?></p>
-				<span class="meta-mono"><?php the_author(); ?> · hace <?php echo esc_html( human_time_diff( get_the_time( 'U' ) ) ); ?></span>
+				<span class="meta-mono"><a class="tile-hero-author" href="<?php echo esc_url( dereporteros_author_link( $hero_id ) ); ?>"><?php the_author(); ?></a> · hace <?php echo esc_html( human_time_diff( get_the_time( 'U' ) ) ); ?></span>
 			</div>
 		</div>
 
@@ -75,8 +75,8 @@ if ( $hero_id ) :
 			<img src="<?php echo esc_url( dereporteros_thumb_src( $mini_id, 'medium' ) ); ?>" alt="<?php the_title_attribute(); ?>">
 			<div class="tile-mini-scrim"></div>
 			<div class="tile-mini-body">
-				<span class="pill <?php echo esc_attr( dereporteros_pill_class( 1 ) ); ?>"><?php echo esc_html( dereporteros_category_name( $mini_id ) ); ?></span>
-				<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+				<a class="pill <?php echo esc_attr( dereporteros_pill_class( 1 ) ); ?>" href="<?php echo esc_url( dereporteros_category_link( $mini_id ) ); ?>"><?php echo esc_html( dereporteros_category_name( $mini_id ) ); ?></a>
+				<h3><a class="tile-mini-link" href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 				<p><?php echo esc_html( wp_trim_words( get_the_excerpt(), 18 ) ); ?></p>
 				<span class="meta-mono">Actualizado hace <?php echo esc_html( human_time_diff( get_the_time( 'U' ) ) ); ?></span>
 			</div>

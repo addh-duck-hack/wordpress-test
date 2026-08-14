@@ -130,6 +130,14 @@ function dereporteros_category_link( $post_id ) {
 }
 
 /**
+ * URL del archivo de autor de una entrada, para enlazar el nombre del
+ * autor en tarjetas/hero (nota del día, tile-hero) a su página de autor.
+ */
+function dereporteros_author_link( $post_id ) {
+	return get_author_posts_url( get_post_field( 'post_author', $post_id ) );
+}
+
+/**
  * Categoría a mostrar junto a cada nota del cintillo de última hora.
  * "ultima-hora" es una etiqueta (no categoría), así que ya no hay
  * necesidad de excluir nada: se reutiliza el nombre de categoría normal.
