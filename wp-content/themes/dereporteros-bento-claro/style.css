@@ -310,7 +310,7 @@ footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}
 /* Barra "Compartir": botones a redes sociales + correo, debajo de la
    imagen destacada de la entrada. */
 .share-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 32px;padding-bottom:26px;border-bottom:1px solid var(--line);}
-.share-label{margin-right:2px;}
+.share-bar .share-label{margin:0 2px 0 0;}
 .share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:30px;border:1px solid var(--line);font-family:'Inter',sans-serif;font-weight:700;font-size:12.5px;color:var(--ink-soft);transition:background .15s ease,border-color .15s ease,color .15s ease;}
 .share-btn svg{width:15px;height:15px;flex-shrink:0;}
 .share-btn:hover{background:var(--green);border-color:var(--green);color:#fff;}
