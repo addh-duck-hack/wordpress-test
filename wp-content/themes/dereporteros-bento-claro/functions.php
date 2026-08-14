@@ -63,6 +63,15 @@ function dereporteros_ticker_category_name( $post_id ) {
 }
 
 /**
+ * Nombre de la primera etiqueta (tag) de una entrada, o cadena vacía si no
+ * tiene ninguna — para pills que muestran tag en vez de categoría.
+ */
+function dereporteros_first_tag_name( $post_id ) {
+	$tags = get_the_tags( $post_id );
+	return ( $tags && ! empty( $tags ) ) ? $tags[0]->name : '';
+}
+
+/**
  * Alterna la clase de color del pill (verde/alerta) según posición,
  * solo para variedad visual entre tarjetas.
  */

@@ -208,13 +208,13 @@ if ( $dereporteros_personas_query->have_posts() ) :
 
 <?php if ( $grid_ids ) : ?>
 <section class="section-block wrap">
-	<div class="section-head"><h2><?php echo is_home() || is_front_page() ? 'Portada' : esc_html( get_the_archive_title() ); ?></h2><span class="mono"><?php echo count( $grid_ids ); ?> notas</span></div>
+	<div class="section-head"><h2><?php echo is_home() || is_front_page() ? 'Metrópoli' : esc_html( get_the_archive_title() ); ?></h2><span class="mono"><?php echo count( $grid_ids ); ?> notas</span></div>
 	<div class="grid-4">
 		<?php foreach ( $grid_ids as $i => $id ) : $post = get_post( $id ); setup_postdata( $post ); ?>
 		<div class="card">
 			<div class="imgwrap"><img src="<?php echo esc_url( dereporteros_thumb_src( $id, 'medium' ) ); ?>" alt="<?php the_title_attribute(); ?>"></div>
 			<div class="body">
-				<span class="pill <?php echo esc_attr( dereporteros_pill_class( $i ) ); ?>"><?php echo esc_html( dereporteros_category_name( $id ) ); ?></span>
+				<span class="meta-mono">hace <?php echo esc_html( human_time_diff( get_the_time( 'U' ) ) ); ?></span>
 				<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 			</div>
 		</div>
@@ -240,16 +240,20 @@ if ( is_front_page() && is_home() && ! is_paged() && $dereporteros_hero_latest->
 	$dereporteros_hl_slots = [ 'hl-a', 'hl-b', 'hl-c', 'hl-d' ];
 	?>
 <section class="hero-latest">
+	<span class="hl-ribbon"><span aria-hidden="true">🎭</span> Espectáculos</span>
 	<?php
 	$dereporteros_hl_i = 0;
 	while ( $dereporteros_hero_latest->have_posts() ) : $dereporteros_hero_latest->the_post();
-		$dereporteros_hl_id = get_the_ID();
+		$dereporteros_hl_id  = get_the_ID();
+		$dereporteros_hl_tag = dereporteros_first_tag_name( $dereporteros_hl_id );
 		?>
 	<a class="hl-tile <?php echo esc_attr( $dereporteros_hl_slots[ $dereporteros_hl_i ] ); ?>" href="<?php the_permalink(); ?>">
 		<img src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_hl_id, 'large' ) ); ?>" alt="<?php the_title_attribute(); ?>">
 		<div class="hl-scrim"></div>
 		<div class="hl-body">
-			<span class="pill green"><?php echo esc_html( dereporteros_category_name( $dereporteros_hl_id ) ); ?></span>
+			<?php if ( $dereporteros_hl_tag ) : ?>
+			<span class="pill green"><?php echo esc_html( $dereporteros_hl_tag ); ?></span>
+			<?php endif; ?>
 			<h3 class="hl-title"><?php the_title(); ?></h3>
 		</div>
 	</a>
