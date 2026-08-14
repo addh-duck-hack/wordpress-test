@@ -72,6 +72,43 @@ function dereporteros_first_tag_name( $post_id ) {
 }
 
 /**
+ * ID de la entrada más reciente con una etiqueta dada, o null. Query barata
+ * usada por componentes que necesitan una sola nota (p. ej. "nota del día")
+ * y por otras secciones que necesitan excluir esa misma nota.
+ */
+function dereporteros_latest_id_by_tag( $tag ) {
+	$query = new WP_Query( [
+		'tag'                     => $tag,
+		'posts_per_page'          => 1,
+		'orderby'                 => 'date',
+		'order'                   => 'DESC',
+		'ignore_sticky_posts'     => true,
+		'no_found_rows'           => true,
+		'update_post_meta_cache'  => false,
+		'update_post_term_cache'  => false,
+	] );
+	return $query->posts[0]->ID ?? null;
+}
+
+/**
+ * True si existe al menos una entrada publicada con la etiqueta dada. Query
+ * barata (solo IDs) para secciones que solo necesitan saber si van a tener
+ * contenido, sin cargar el contenido en sí (p. ej. el aviso de "sin notas").
+ */
+function dereporteros_has_tagged_posts( $tag ) {
+	$query = new WP_Query( [
+		'tag'                     => $tag,
+		'posts_per_page'          => 1,
+		'fields'                  => 'ids',
+		'ignore_sticky_posts'     => true,
+		'no_found_rows'           => true,
+		'update_post_meta_cache'  => false,
+		'update_post_term_cache'  => false,
+	] );
+	return ! empty( $query->posts );
+}
+
+/**
  * Alterna la clase de color del pill (verde/alerta) según posición,
  * solo para variedad visual entre tarjetas.
  */
