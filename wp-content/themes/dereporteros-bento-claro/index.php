@@ -56,7 +56,9 @@ $dereporteros_metropoli_query = new WP_Query( [
 	'update_post_meta_cache'  => false,
 	'update_post_term_cache'  => false,
 ] );
-$grid_ids = wp_list_pluck( $dereporteros_metropoli_query->posts, 'ID' );
+$grid_ids                    = wp_list_pluck( $dereporteros_metropoli_query->posts, 'ID' );
+$dereporteros_metropoli_cat  = get_category_by_slug( 'metropoli' );
+$dereporteros_metropoli_link = $dereporteros_metropoli_cat ? get_category_link( $dereporteros_metropoli_cat ) : '';
 
 global $wp_query;
 $queried_ids = wp_list_pluck( $wp_query->posts, 'ID' );
@@ -208,7 +210,12 @@ if ( $dereporteros_personas_query->have_posts() ) :
 
 <?php if ( $grid_ids ) : ?>
 <section class="section-block wrap">
-	<div class="section-head"><h2><?php echo is_home() || is_front_page() ? 'Metrópoli' : esc_html( get_the_archive_title() ); ?></h2><span class="mono"><?php echo count( $grid_ids ); ?> notas</span></div>
+	<div class="section-head">
+		<h2><?php echo is_home() || is_front_page() ? 'Metrópoli' : esc_html( get_the_archive_title() ); ?></h2>
+		<?php if ( $dereporteros_metropoli_link ) : ?>
+		<a class="section-see-all" href="<?php echo esc_url( $dereporteros_metropoli_link ); ?>">Ver más →</a>
+		<?php endif; ?>
+	</div>
 	<div class="grid-4">
 		<?php foreach ( $grid_ids as $i => $id ) : $post = get_post( $id ); setup_postdata( $post ); ?>
 		<div class="card">
@@ -222,6 +229,11 @@ if ( $dereporteros_personas_query->have_posts() ) :
 	</div>
 </section>
 <?php endif; ?>
+
+<section class="ad-banner wrap">
+	<span class="ad-banner-label mono">Publicidad</span>
+	<img class="ad-banner-img" src="<?php echo esc_url( get_template_directory_uri() . '/images/publicidad-banner.png' ); ?>" alt="Espacio publicitario disponible — aquí te puedes anunciar" loading="lazy">
+</section>
 
 <?php
 /**

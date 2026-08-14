@@ -4,7 +4,7 @@ Theme URI: https://tudominio.com
 Author: Duck Hack
 Author URI: https://duck-hack.com
 Description: Propuesta de tema para dereporteros.com — hero tipo "bento" asimétrico (estructura de Panorama) con la piel clara y cálida de Moderno Equilibrado.
-Version: 1.3
+Version: 1.5
 Requires at least: 6.0
 Requires PHP: 8.0
 Text Domain: dereporteros-bento-claro
@@ -181,6 +181,11 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 }
 .nota-dia-card:hover .nota-dia-cta{background:var(--green);color:#fff;}
 
+/* Espacio publicitario entre "Metrópoli" y "Espectáculos" */
+.ad-banner{padding:6px 28px 34px;}
+.ad-banner-label{display:block;color:var(--ink-soft);font-size:10.5px;letter-spacing:.05em;margin-bottom:8px;}
+.ad-banner-img{width:100%;height:auto;border-radius:var(--radius);display:block;}
+
 /* Carousel "Personas Desaparecidas" — acento rojo (distinto del verde del
    resto del sitio) para señalar que es contenido urgente/sensible. */
 .personas{padding:14px 0 40px;}
@@ -228,6 +233,8 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;}
 .section-head h2{font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:.02em;}
 .section-head .mono{color:var(--ink-soft);font-size:11px;}
+.section-see-all{font-family:'Barlow',sans-serif;font-weight:700;font-size:13px;color:var(--green);white-space:nowrap;}
+.section-see-all:hover{text-decoration:underline;}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
 .card .imgwrap{height:128px;}
