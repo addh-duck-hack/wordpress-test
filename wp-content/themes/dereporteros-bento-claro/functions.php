@@ -23,6 +23,13 @@ add_action( 'pre_get_posts', function ( $query ) {
 	if ( is_admin() ) {
 		return;
 	}
+	// Excepción: las notas de publicidad viven a propósito en
+	// "sin-categoria" (solo las identifica su etiqueta 'publicidad1' /
+	// 'publicidad2'), así que las consultas de los banners no deben
+	// excluir esa categoría o se quedarían sin anuncio que mostrar.
+	if ( in_array( $query->get( 'tag' ), [ 'publicidad1', 'publicidad2' ], true ) ) {
+		return;
+	}
 	$sin_categoria = get_category_by_slug( 'sin-categoria' );
 	if ( ! $sin_categoria ) {
 		return;
