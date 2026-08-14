@@ -322,6 +322,9 @@ footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}
 .share-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:30px;border:1px solid var(--line);font-family:'Inter',sans-serif;font-weight:700;font-size:12.5px;color:var(--ink-soft);transition:background .15s ease,border-color .15s ease,color .15s ease;}
 .share-btn svg{width:15px;height:15px;flex-shrink:0;}
 .share-btn:hover{background:var(--green);border-color:var(--green);color:#fff;}
+/* Segunda barra de compartir, antes de "Recomendado para ti": mismo
+   componente pero con el separador arriba en vez de abajo. */
+.share-bar--top{margin:32px 0 0;padding:26px 0 0;border-bottom:0;border-top:1px solid var(--line);}
 
 .screen-reader-text{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 
