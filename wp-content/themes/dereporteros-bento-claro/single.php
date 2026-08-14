@@ -74,6 +74,16 @@ get_header();
 		<?php the_content(); ?>
 	</div>
 </article>
+
+<?php
+get_template_part( 'template-parts/grid-section', null, [
+	'title'   => 'Recomendado para ti',
+	'random'  => true,
+	'exclude' => [ get_the_ID() ],
+] );
+get_template_part( 'template-parts/comments' );
+?>
+
 <?php endwhile; ?>
 
 <?php get_footer(); ?>

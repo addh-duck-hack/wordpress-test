@@ -2,34 +2,48 @@
 /**
  * Componente: grid de 4 notas con encabezado y link "Ver más" al archivo de
  * la categoría consultada. Usado actualmente para "Metrópoli", pero sirve
- * para cualquier categoría con solo cambiar $args.
+ * para cualquier categoría con solo cambiar $args. También soporta un modo
+ * "random" (4 notas al azar de todo el sitio, sin categoría ni "Ver más")
+ * para bloques tipo "Recomendado para ti" al final de una entrada.
  *
  * $args:
- *   'source' (string) — slug de la categoría a consultar.
- *   'title'  (string) — título de la sección.
+ *   'source'  (string) — slug de la categoría a consultar (ignorado si 'random').
+ *   'title'   (string) — título de la sección.
+ *   'random'  (bool)   — true: 4 notas al azar, sin "Ver más". Default false.
+ *   'exclude' (int[])  — IDs a excluir de la consulta (ej. la entrada actual).
  */
 $dereporteros_grid_args = wp_parse_args( $args ?? [], [
-	'source' => 'metropoli',
-	'title'  => 'Metrópoli',
+	'source'  => 'metropoli',
+	'title'   => 'Metrópoli',
+	'random'  => false,
+	'exclude' => [],
 ] );
 
-$dereporteros_grid_query = new WP_Query( [
-	'category_name'           => $dereporteros_grid_args['source'],
+$dereporteros_grid_query_args = [
 	'posts_per_page'          => 4,
 	'ignore_sticky_posts'     => true,
 	'no_found_rows'           => true,
 	'update_post_meta_cache'  => false,
 	'update_post_term_cache'  => false,
-] );
+	'post__not_in'            => $dereporteros_grid_args['exclude'],
+];
+
+if ( $dereporteros_grid_args['random'] ) {
+	$dereporteros_grid_query_args['orderby'] = 'rand';
+} else {
+	$dereporteros_grid_query_args['category_name'] = $dereporteros_grid_args['source'];
+}
+
+$dereporteros_grid_query = new WP_Query( $dereporteros_grid_query_args );
 $grid_ids               = wp_list_pluck( $dereporteros_grid_query->posts, 'ID' );
-$dereporteros_grid_cat  = get_category_by_slug( $dereporteros_grid_args['source'] );
+$dereporteros_grid_cat  = $dereporteros_grid_args['random'] ? null : get_category_by_slug( $dereporteros_grid_args['source'] );
 $dereporteros_grid_link = $dereporteros_grid_cat ? get_category_link( $dereporteros_grid_cat ) : '';
 
 if ( $grid_ids ) :
 	?>
 <section class="section-block wrap">
 	<div class="section-head">
-		<h2><?php echo is_home() || is_front_page() ? esc_html( $dereporteros_grid_args['title'] ) : esc_html( get_the_archive_title() ); ?></h2>
+		<h2><?php echo ( $dereporteros_grid_args['random'] || is_home() || is_front_page() ) ? esc_html( $dereporteros_grid_args['title'] ) : esc_html( get_the_archive_title() ); ?></h2>
 		<?php if ( $dereporteros_grid_link ) : ?>
 		<a class="section-see-all" href="<?php echo esc_url( $dereporteros_grid_link ); ?>">Ver más →</a>
 		<?php endif; ?>

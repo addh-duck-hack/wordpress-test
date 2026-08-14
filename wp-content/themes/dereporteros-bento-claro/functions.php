@@ -237,3 +237,26 @@ function dereporteros_fecha_hoy() {
 	];
 	return sprintf( '%d de %s', (int) current_time( 'j' ), $meses[ (int) current_time( 'n' ) ] );
 }
+
+/**
+ * Callback de wp_list_comments() para el bloque de comentarios de la
+ * entrada (template-parts/comments.php) — un comentario por línea, sin
+ * hilos anidados ni "Responder", en línea con el resto del tema.
+ */
+function dereporteros_comment_html( $comment, $args, $depth ) {
+	$tag = ( 'div' === $args['style'] ) ? 'div' : 'li';
+	?>
+	<<?php echo esc_html( $tag ); ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( 'comment-item' ); ?>>
+		<?php echo get_avatar( $comment, 44, '', '', [ 'class' => 'comment-avatar' ] ); ?>
+		<div class="comment-body">
+			<div class="comment-meta">
+				<span class="comment-author"><?php comment_author(); ?></span>
+				<span class="comment-date meta-mono"><?php echo esc_html( get_comment_date( 'j M Y' ) ); ?></span>
+			</div>
+			<?php if ( '0' === $comment->comment_approved ) : ?>
+			<p class="comment-pending meta-mono">Tu comentario está pendiente de moderación.</p>
+			<?php endif; ?>
+			<div class="comment-text"><?php comment_text(); ?></div>
+		</div>
+	<?php
+}
