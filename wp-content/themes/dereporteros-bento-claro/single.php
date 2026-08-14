@@ -13,13 +13,13 @@ get_header();
 		<?php the_post_thumbnail( 'large', array( 'class' => 'single-featured-img' ) ); ?>
 		<div class="single-featured-scrim"></div>
 		<div class="single-featured-content">
-			<span class="pill <?php echo esc_attr( dereporteros_pill_class( 0 ) ); ?>"><?php echo esc_html( dereporteros_category_name( get_the_ID() ) ); ?></span>
+			<a class="pill <?php echo esc_attr( dereporteros_pill_class( 0 ) ); ?>" href="<?php echo esc_url( dereporteros_category_link( get_the_ID() ) ); ?>"><?php echo esc_html( dereporteros_category_name( get_the_ID() ) ); ?></a>
 			<h1><?php the_title(); ?></h1>
 			<span class="meta-mono"><?php the_author(); ?> · <?php echo esc_html( get_the_date() ); ?></span>
 		</div>
 	</div>
 	<?php else : ?>
-	<span class="pill <?php echo esc_attr( dereporteros_pill_class( 0 ) ); ?>"><?php echo esc_html( dereporteros_category_name( get_the_ID() ) ); ?></span>
+	<a class="pill <?php echo esc_attr( dereporteros_pill_class( 0 ) ); ?>" href="<?php echo esc_url( dereporteros_category_link( get_the_ID() ) ); ?>"><?php echo esc_html( dereporteros_category_name( get_the_ID() ) ); ?></a>
 	<h1><?php the_title(); ?></h1>
 	<span class="meta-mono"><?php the_author(); ?> · <?php echo esc_html( get_the_date() ); ?></span>
 	<?php endif; ?>

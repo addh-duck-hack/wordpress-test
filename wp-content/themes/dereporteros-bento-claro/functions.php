@@ -120,6 +120,16 @@ function dereporteros_category_name( $post_id ) {
 }
 
 /**
+ * URL del archivo de la primera categoría de una entrada, para que el pill
+ * de categoría (single.php, etc.) enlace a algo — cadena vacía si no tiene
+ * categoría (fallback "General"), así el pill puede quedarse como texto.
+ */
+function dereporteros_category_link( $post_id ) {
+	$cats = get_the_category( $post_id );
+	return ! empty( $cats ) ? get_category_link( $cats[0]->term_id ) : '';
+}
+
+/**
  * Categoría a mostrar junto a cada nota del cintillo de última hora.
  * "ultima-hora" es una etiqueta (no categoría), así que ya no hay
  * necesidad de excluir nada: se reutiliza el nombre de categoría normal.
