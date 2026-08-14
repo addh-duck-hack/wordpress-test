@@ -294,6 +294,10 @@ footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}
 .back-link{display:inline-block;margin-bottom:18px;font-size:13px;font-weight:700;color:var(--green);}
 
 @media (max-width:900px){
+  /* Cintillo "última hora": en móvil no cabe categoría + título + extracto
+     sin amontonarse — se deja solo el badge y el extracto en marquesina. */
+  .ticker-static{display:none;}
+
   .bento-grid,.grid-4{grid-template-columns:1fr;}
   .lower{grid-template-columns:1fr;}
   .ad-slot{position:static;max-width:260px;margin:0 auto;}
