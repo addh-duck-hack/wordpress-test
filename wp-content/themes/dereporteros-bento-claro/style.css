@@ -301,8 +301,11 @@ footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}
 
   .nota-dia-card{height:clamp(380px, 72vh, 480px);border-radius:12px;}
   .nota-dia-content{padding:28px 24px;max-width:none;}
-  .nota-dia-title{font-size:27px;}
+  .nota-dia-title{font-size:27px;margin-bottom:18px;}
   .nota-dia-ribbon{top:18px;font-size:11px;padding:8px 16px 8px 14px;}
+  /* El extracto amontona la tarjeta en pantallas chicas: en móvil solo se
+     muestra título + categoría + CTA. */
+  .nota-dia-dek{display:none;}
 
   /* Header: el logo + botón hamburguesa quedan en la barra; el nav y las
      redes sociales se pliegan en un panel debajo que se abre con el botón.
