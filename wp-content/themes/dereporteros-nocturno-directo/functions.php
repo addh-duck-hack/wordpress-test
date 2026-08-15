@@ -198,6 +198,32 @@ if ( ! function_exists( 'dereporteros_author_link' ) ) {
 	}
 }
 
+if ( ! function_exists( 'dereporteros_fecha_hoy' ) ) {
+	/**
+	 * Fecha de hoy en español ("12 de agosto"), con los nombres de mes
+	 * escritos a mano en vez de depender del locale configurado en
+	 * WordPress — el resto del tema ya maneja sus textos en español así,
+	 * sin i18n.
+	 */
+	function dereporteros_fecha_hoy() {
+		$meses = [
+			1 => 'enero',
+			2 => 'febrero',
+			3 => 'marzo',
+			4 => 'abril',
+			5 => 'mayo',
+			6 => 'junio',
+			7 => 'julio',
+			8 => 'agosto',
+			9 => 'septiembre',
+			10 => 'octubre',
+			11 => 'noviembre',
+			12 => 'diciembre',
+		];
+		return sprintf( '%d de %s', (int) current_time( 'j' ), $meses[ (int) current_time( 'n' ) ] );
+	}
+}
+
 if ( ! function_exists( 'dereporteros_comment_html' ) ) {
 	/**
 	 * Callback de wp_list_comments() para el bloque de comentarios de la

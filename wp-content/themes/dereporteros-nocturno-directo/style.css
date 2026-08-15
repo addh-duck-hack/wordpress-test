@@ -51,7 +51,11 @@ a.pill:hover{opacity:.85;}
 /* Ticker — una sola nota: categoría/título fijos + extracto en marquesina */
 .ticker{background:var(--panel);border-bottom:1px solid var(--line);color:#fff;}
 .ticker .wrap{display:flex;align-items:center;height:42px;gap:16px;}
-.ticker .badge{background:var(--alert);font-family:'Barlow',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:.05em;padding:5px 10px;border-radius:3px;flex-shrink:0;}
+/* Badge "Última hora" con un pulso tipo "en vivo" — anillo que se expande
+   y se desvanece alrededor del badge — distinto de la marquesina (que ya
+   trae su propia animación de scroll) para que el cintillo llame más la
+   atención sin copiar el tratamiento del tema Bento Claro. */
+.ticker .badge{background:var(--alert);font-family:'Barlow',sans-serif;font-weight:800;font-size:11.5px;letter-spacing:.05em;padding:5px 10px;border-radius:3px;flex-shrink:0;animation:ticker-badge-pulse 2.2s ease-out infinite;}
 .ticker .items{flex:1;min-width:0;height:100%;overflow:hidden;}
 .ticker-item{display:flex;align-items:center;gap:14px;height:100%;overflow:hidden;}
 .ticker-static{display:flex;align-items:center;gap:8px;flex-shrink:0;max-width:48%;overflow:hidden;}
@@ -71,8 +75,14 @@ a.pill:hover{opacity:.85;}
   0%{transform:translateX(100%);}
   100%{transform:translateX(-100%);}
 }
+@keyframes ticker-badge-pulse{
+  0%{box-shadow:0 0 0 0 rgba(225,75,75,.55);}
+  70%{box-shadow:0 0 0 8px rgba(225,75,75,0);}
+  100%{box-shadow:0 0 0 0 rgba(225,75,75,0);}
+}
 @media (prefers-reduced-motion: reduce){
   .ticker-marquee{animation:none;}
+  .ticker .badge{animation:none;}
 }
 
 /* Header */
@@ -141,6 +151,18 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .mini-card .pill{position:relative;z-index:2;}
 .mini-card-link::after{content:'';position:absolute;inset:0;z-index:1;}
 
+/* Relleno sólido para el hueco que queda bajo las mini-cards de
+   .hero-side (el grid la estira a la altura de .hero-main, pero 3
+   mini-cards casi nunca la llenan) — fecha del día + recomendación al
+   azar, fondo verde oscuro para que resalte frente a las tarjetas
+   alrededor, en la esquina más visible de la portada. */
+.hero-stat{flex:1;min-height:110px;padding:20px;display:flex;flex-direction:column;justify-content:center;background:var(--green-deep);border-radius:10px;}
+.hero-stat-date{font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#9FD6B4;}
+.hero-stat-lead{font-family:'Barlow',sans-serif;font-weight:800;font-size:16px;color:#fff;margin:6px 0 14px;}
+.hero-stat-rec{display:block;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);}
+.hero-stat-rec-title{display:block;font-family:'Barlow',sans-serif;font-weight:700;font-size:14.5px;line-height:1.35;color:#fff;margin-bottom:6px;}
+.hero-stat-rec-meta{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.03em;color:#9FD6B4;}
+
 /* "Nota del día": banner inmersivo de una sola nota (etiqueta
    "nota-del-dia"), foto de fondo a toda la tarjeta + degradado, listón
    destacado y botón real de lectura. */
@@ -193,6 +215,12 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .ad-banner-label{display:block;color:var(--text-soft);font-size:10.5px;letter-spacing:.05em;margin-bottom:8px;}
 .ad-banner-img{width:100%;height:auto;border-radius:var(--radius);display:block;}
 .ad-banner a{display:block;}
+
+/* Espacio publicitario vertical (columna angosta de .body-cols). */
+.ad-slot{position:sticky;top:20px;}
+.ad-slot-label{display:block;color:var(--text-soft);font-size:10.5px;letter-spacing:.05em;margin-bottom:8px;}
+.ad-slot-img{width:100%;height:auto;border-radius:var(--radius);display:block;}
+.ad-slot a{display:block;}
 
 /* Carousel "Personas Desaparecidas" — acento rojo (distinto del verde del
    resto del sitio) para señalar que es contenido urgente/sensible. */

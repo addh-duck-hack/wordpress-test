@@ -16,8 +16,10 @@ get_header();
 global $wp_query;
 $queried_ids = wp_list_pluck( $wp_query->posts, 'ID' );
 $grid_ids    = array_slice( $queried_ids, 0, 4 );
-$feed_ids    = array_slice( $queried_ids, 4, 3 );
-$trend_ids   = array_slice( $queried_ids, 7, 4 );
+// "Últimas noticias" ya no se imprime (su lugar ahora lo ocupa "Más
+// leídas"), así que "Más leídas" toma la siguiente tanda de posts justo
+// después de $grid_ids en vez de dejar ese rango sin usar.
+$trend_ids   = array_slice( $queried_ids, 4, 4 );
 
 // Solo para decidir si mostrar el aviso de "sin entradas" de más abajo
 // (sin repetir la consulta completa del hero, que hace su propio query).
@@ -58,19 +60,17 @@ $dereporteros_has_hero = dereporteros_has_tagged_posts( 'portada' );
 get_template_part( 'template-parts/hero-latest' );
 ?>
 
-<?php if ( $feed_ids || $trend_ids ) : ?>
+<?php if ( $trend_ids ) : ?>
 <section class="body-cols wrap">
 	<?php
-	get_template_part( 'template-parts/latest-feed', null, [ 'title' => 'Últimas noticias', 'ids' => $feed_ids ] );
 	get_template_part( 'template-parts/trend-card', null, [ 'title' => 'Más leídas', 'ids' => $trend_ids ] );
+	get_template_part( 'template-parts/ad-banner-side', null, [
+		'source' => 'publicidad2',
+		'label'  => 'Publicidad',
+	] );
 	?>
 </section>
 <?php endif; ?>
-
-<?php get_template_part( 'template-parts/ad-banner', null, [
-	'source' => 'publicidad2',
-	'label'  => 'Publicidad',
-] ); ?>
 
 <?php if ( ! $dereporteros_has_hero && empty( $queried_ids ) ) : ?>
 <div class="wrap" style="padding:70px 0;text-align:center;color:var(--text-soft);">
