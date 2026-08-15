@@ -57,29 +57,36 @@ if ( $hero_id ) :
 			<?php
 			// Relleno del hueco que queda bajo las mini-cards (.hero-side se
 			// estira a la altura de .hero-main por el grid, pero 3 mini-cards
-			// casi nunca la llenan): fecha del día + una recomendación al
-			// azar, con tratamiento sólido para que resalte en esa esquina,
-			// que es zona muy visible al ser la vista principal del sitio.
-			$dereporteros_recommend_query = new WP_Query( [
-				'posts_per_page'         => 1,
-				'orderby'                => 'rand',
-				'post__not_in'           => array_merge( [ $hero_id ], $side_ids ),
-				'ignore_sticky_posts'    => true,
-				'no_found_rows'          => true,
-				'update_post_meta_cache' => false,
-			] );
-			$dereporteros_recommend_id = $dereporteros_recommend_query->posts[0]->ID ?? null;
+			// casi nunca la llenan): la última nota con la etiqueta "cdmx",
+			// con un tratamiento propio (mitad mapa de la ciudad, mitad la
+			// imagen destacada de la nota) para diferenciarla del resto de
+			// tarjetas del hero. Si no hay ninguna nota con esa etiqueta, cae
+			// a una recomendación al azar para no dejar el hueco vacío.
+			$dereporteros_cdmx_id = dereporteros_latest_id_by_tag( 'cdmx' );
+			if ( ! $dereporteros_cdmx_id ) {
+				$dereporteros_recommend_query = new WP_Query( [
+					'posts_per_page'         => 1,
+					'orderby'                => 'rand',
+					'post__not_in'           => array_merge( [ $hero_id ], $side_ids ),
+					'ignore_sticky_posts'    => true,
+					'no_found_rows'          => true,
+					'update_post_meta_cache' => false,
+				] );
+				$dereporteros_cdmx_id = $dereporteros_recommend_query->posts[0]->ID ?? null;
+			}
 			?>
-			<div class="hero-stat">
-				<span class="hero-stat-date">Hoy, <?php echo esc_html( dereporteros_fecha_hoy() ); ?></span>
-				<span class="hero-stat-lead">Te recomendamos leer</span>
-				<?php if ( $dereporteros_recommend_id ) : ?>
-				<a class="hero-stat-rec" href="<?php echo esc_url( get_permalink( $dereporteros_recommend_id ) ); ?>">
-					<span class="hero-stat-rec-title"><?php echo esc_html( get_the_title( $dereporteros_recommend_id ) ); ?></span>
-					<span class="hero-stat-rec-meta">hace <?php echo esc_html( human_time_diff( get_post_time( 'U', false, $dereporteros_recommend_id ) ) ); ?></span>
-				</a>
-				<?php endif; ?>
-			</div>
+			<?php if ( $dereporteros_cdmx_id ) : ?>
+			<a class="hero-cdmx" href="<?php echo esc_url( get_permalink( $dereporteros_cdmx_id ) ); ?>">
+				<div class="hero-cdmx-media">
+					<img class="hero-cdmx-map" src="<?php echo esc_url( get_template_directory_uri() . '/images/mapa-cdmx.jpg' ); ?>" alt="" aria-hidden="true">
+					<img class="hero-cdmx-thumb" src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_cdmx_id, 'medium' ) ); ?>" alt="">
+				</div>
+				<div class="hero-cdmx-body">
+					<span class="pill <?php echo esc_attr( dereporteros_pill_class( 2 ) ); ?>"><?php echo esc_html( dereporteros_category_name( $dereporteros_cdmx_id ) ); ?></span>
+					<h3><?php echo esc_html( get_the_title( $dereporteros_cdmx_id ) ); ?></h3>
+				</div>
+			</a>
+			<?php endif; ?>
 		</div>
 		<?php endif; ?>
 

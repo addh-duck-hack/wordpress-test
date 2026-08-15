@@ -62,18 +62,35 @@ a.pill:hover{opacity:.85;}
 .ticker-cat{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--green);flex-shrink:0;}
 .ticker-title{color:var(--text);font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .ticker-sep{color:var(--line);padding:0 2px;flex-shrink:0;}
-.ticker-marquee-wrap{flex:1;min-width:0;height:100%;overflow:hidden;}
+.ticker-marquee-wrap{flex:1;min-width:0;height:100%;display:flex;align-items:center;overflow:hidden;}
+/* Máquina de escribir en vez de marquesina deslizante (esa es la del tema
+   Bento Claro): el texto se revela de a un carácter con steps(), el ancho
+   final en "ch" (--ticker-width, calculado por PHP según la longitud del
+   extracto) es lo que hace que el texto completo termine descubierto, y
+   el borde derecho hace de cursor parpadeante mientras tanto. */
 .ticker-marquee{
-  display:inline-flex;align-items:center;height:100%;white-space:nowrap;
-  animation:ticker-scroll linear infinite;
-  animation-duration:var(--marquee-duration, 22s);
+  position:relative;
+  display:inline-block;
+  overflow:hidden;
+  white-space:nowrap;
+  vertical-align:middle;
+  width:0;
+  border-right:2px solid var(--green);
+  animation:
+    ticker-type var(--marquee-duration, 8s) steps(40, end) infinite,
+    ticker-caret-blink .8s step-end infinite;
 }
 .ticker-item:hover .ticker-marquee{animation-play-state:paused;}
 .ticker-body{color:var(--text-soft);font-weight:400;font-size:13px;}
 
-@keyframes ticker-scroll{
-  0%{transform:translateX(100%);}
-  100%{transform:translateX(-100%);}
+@keyframes ticker-type{
+  0%{width:0;}
+  65%{width:var(--ticker-width, 32ch);}
+  100%{width:var(--ticker-width, 32ch);}
+}
+@keyframes ticker-caret-blink{
+  0%, 100%{border-color:transparent;}
+  50%{border-color:var(--green);}
 }
 @keyframes ticker-badge-pulse{
   0%{box-shadow:0 0 0 0 rgba(225,75,75,.55);}
@@ -81,7 +98,9 @@ a.pill:hover{opacity:.85;}
   100%{box-shadow:0 0 0 0 rgba(225,75,75,0);}
 }
 @media (prefers-reduced-motion: reduce){
-  .ticker-marquee{animation:none;}
+  /* Sin animación, el ancho se queda en 0 (punto de partida del tecleo) y
+     el texto no se vería nunca — se muestra directo, ya completo. */
+  .ticker-marquee{animation:none;width:var(--ticker-width, 32ch);border-right-color:transparent;}
   .ticker .badge{animation:none;}
 }
 
@@ -151,17 +170,18 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 .mini-card .pill{position:relative;z-index:2;}
 .mini-card-link::after{content:'';position:absolute;inset:0;z-index:1;}
 
-/* Relleno sólido para el hueco que queda bajo las mini-cards de
-   .hero-side (el grid la estira a la altura de .hero-main, pero 3
-   mini-cards casi nunca la llenan) — fecha del día + recomendación al
-   azar, fondo verde oscuro para que resalte frente a las tarjetas
-   alrededor, en la esquina más visible de la portada. */
-.hero-stat{flex:1;min-height:110px;padding:20px;display:flex;flex-direction:column;justify-content:center;background:var(--green-deep);border-radius:10px;}
-.hero-stat-date{font-family:'JetBrains Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:#9FD6B4;}
-.hero-stat-lead{font-family:'Barlow',sans-serif;font-weight:800;font-size:16px;color:#fff;margin:6px 0 14px;}
-.hero-stat-rec{display:block;padding-top:14px;border-top:1px solid rgba(255,255,255,.14);}
-.hero-stat-rec-title{display:block;font-family:'Barlow',sans-serif;font-weight:700;font-size:14.5px;line-height:1.35;color:#fff;margin-bottom:6px;}
-.hero-stat-rec-meta{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.03em;color:#9FD6B4;}
+/* Relleno para el hueco que queda bajo las mini-cards de .hero-side (el
+   grid la estira a la altura de .hero-main, pero 3 mini-cards casi nunca
+   la llenan): la última nota etiquetada "cdmx", con la imagen partida a
+   la mitad —mapa de la ciudad / foto de la nota— para que se distinga a
+   simple vista del resto de tarjetas del hero. */
+.hero-cdmx{flex:1;min-height:130px;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.hero-cdmx-media{display:flex;flex:1;min-height:76px;}
+.hero-cdmx-media img{width:50%;height:100%;object-fit:cover;display:block;}
+.hero-cdmx-map{filter:grayscale(.25) brightness(.85);}
+.hero-cdmx-body{padding:12px 14px;}
+.hero-cdmx-body .pill{margin-bottom:6px;}
+.hero-cdmx-body h3{font-size:14px;line-height:1.32;font-weight:700;color:var(--text);}
 
 /* "Nota del día": banner inmersivo de una sola nota (etiqueta
    "nota-del-dia"), foto de fondo a toda la tarjeta + degradado, listón
