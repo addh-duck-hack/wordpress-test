@@ -87,3 +87,72 @@ if ( ! function_exists( 'dereporteros_thumb_src' ) ) {
 		return $src ? $src : get_template_directory_uri() . '/images/placeholder.svg';
 	}
 }
+
+if ( ! function_exists( 'dereporteros_has_tagged_posts' ) ) {
+	/**
+	 * True si existe al menos una entrada publicada con la etiqueta dada.
+	 * Query barata (solo IDs) para secciones que solo necesitan saber si
+	 * van a tener contenido, sin cargar el contenido en sí (p. ej. el
+	 * aviso de "sin notas" en index.php, sin repetir la consulta completa
+	 * del hero).
+	 */
+	function dereporteros_has_tagged_posts( $tag ) {
+		$query = new WP_Query( [
+			'tag'                     => $tag,
+			'posts_per_page'          => 1,
+			'fields'                  => 'ids',
+			'ignore_sticky_posts'     => true,
+			'no_found_rows'           => true,
+			'update_post_meta_cache'  => false,
+			'update_post_term_cache'  => false,
+		] );
+		return ! empty( $query->posts );
+	}
+}
+
+if ( ! function_exists( 'dereporteros_category_link' ) ) {
+	/**
+	 * URL del archivo de la primera categoría de una entrada, para que el
+	 * pill de categoría (single.php, tarjetas, etc.) enlace a algo —
+	 * cadena vacía si no tiene categoría (fallback "General").
+	 */
+	function dereporteros_category_link( $post_id ) {
+		$cats = get_the_category( $post_id );
+		return ! empty( $cats ) ? get_category_link( $cats[0]->term_id ) : '';
+	}
+}
+
+if ( ! function_exists( 'dereporteros_author_link' ) ) {
+	/**
+	 * URL del archivo de autor de una entrada, para enlazar el nombre del
+	 * autor en tarjetas/hero a su página de autor.
+	 */
+	function dereporteros_author_link( $post_id ) {
+		return get_author_posts_url( get_post_field( 'post_author', $post_id ) );
+	}
+}
+
+if ( ! function_exists( 'dereporteros_comment_html' ) ) {
+	/**
+	 * Callback de wp_list_comments() para el bloque de comentarios de la
+	 * entrada (single.php) — un comentario por línea, sin hilos anidados
+	 * ni "Responder".
+	 */
+	function dereporteros_comment_html( $comment, $args, $depth ) {
+		$tag = ( 'div' === $args['style'] ) ? 'div' : 'li';
+		?>
+		<<?php echo esc_html( $tag ); ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( 'comment-item' ); ?>>
+			<?php echo get_avatar( $comment, 44, '', '', [ 'class' => 'comment-avatar' ] ); ?>
+			<div class="comment-body">
+				<div class="comment-meta">
+					<span class="comment-author"><?php comment_author(); ?></span>
+					<span class="comment-date meta-mono"><?php echo esc_html( get_comment_date( 'j M Y' ) ); ?></span>
+				</div>
+				<?php if ( '0' === $comment->comment_approved ) : ?>
+				<p class="comment-pending meta-mono">Tu comentario está pendiente de moderación.</p>
+				<?php endif; ?>
+				<div class="comment-text"><?php comment_text(); ?></div>
+			</div>
+		<?php
+	}
+}

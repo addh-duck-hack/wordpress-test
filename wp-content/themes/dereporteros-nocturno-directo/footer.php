@@ -3,6 +3,8 @@
  * Pie — Nocturno Directo.
  */
 ?>
+</main><!-- .site-main -->
+
 <footer>
 	<div class="wrap foot-grid">
 		<div>

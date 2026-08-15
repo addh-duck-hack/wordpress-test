@@ -12,58 +12,11 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<?php
-/**
- * Cintillo "Última hora": solo la nota más reciente con la etiqueta
- * "ultima-hora" publicada en las últimas 48 horas. Si no hay ninguna, el
- * cintillo no se imprime (queda solo la navbar dentro del wrapper sticky).
- */
-$dereporteros_ticker = new WP_Query( [
-	'tag'                      => 'ultima-hora',
-	'date_query'               => [ [ 'after' => '2 days ago' ] ],
-	'orderby'                  => 'date',
-	'order'                    => 'DESC',
-	'posts_per_page'           => 1,
-	'ignore_sticky_posts'      => true,
-	'no_found_rows'            => true,
-	'update_post_meta_cache'   => false,
-	'update_post_term_cache'   => false,
-] );
-?>
-
 <div class="site-topbar">
-<?php if ( $dereporteros_ticker->have_posts() ) : ?>
-<div class="ticker">
-	<div class="wrap">
-		<span class="badge">Última hora</span>
-		<div class="items">
-			<?php
-			while ( $dereporteros_ticker->have_posts() ) :
-				$dereporteros_ticker->the_post();
-				$dereporteros_ticker_cat   = dereporteros_ticker_category_name( get_the_ID() );
-				$dereporteros_ticker_title = get_the_title();
-				$dereporteros_ticker_body  = wp_trim_words( get_the_excerpt(), 20 );
-				// Marquesina más larga = recorrido más lento, para que la
-				// velocidad de lectura se sienta parecida sin importar el texto.
-				$dereporteros_ticker_speed = max( 16, (int) round( mb_strlen( $dereporteros_ticker_body ) * 0.12 ) );
-				?>
-				<a class="ticker-item" href="<?php the_permalink(); ?>">
-					<span class="ticker-static">
-						<span class="ticker-cat"><?php echo esc_html( $dereporteros_ticker_cat ); ?></span>
-						<span class="ticker-sep">·</span>
-						<b class="ticker-title"><?php echo esc_html( $dereporteros_ticker_title ); ?></b>
-					</span>
-					<span class="ticker-marquee-wrap">
-						<span class="ticker-marquee" aria-hidden="true" style="--marquee-duration: <?php echo esc_attr( $dereporteros_ticker_speed ); ?>s;">
-							<span class="ticker-body"><?php echo esc_html( $dereporteros_ticker_body ); ?></span>
-						</span>
-					</span>
-				</a>
-			<?php endwhile; wp_reset_postdata(); ?>
-		</div>
-	</div>
-</div>
-<?php endif; ?>
+<?php get_template_part( 'template-parts/ticker', null, [
+	'source' => 'ultima-hora',
+	'title'  => 'Última hora',
+] ); ?>
 
 <header class="site">
 	<div class="wrap">
@@ -86,3 +39,5 @@ $dereporteros_ticker = new WP_Query( [
 	</div>
 </header>
 </div><!-- .site-topbar -->
+
+<main class="site-main">
