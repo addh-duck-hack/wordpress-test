@@ -111,10 +111,18 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
    pierde sobre el fondo oscuro del tema si se coloca directo. */
 .brand{display:inline-flex;align-items:center;flex-shrink:0;background:#fff;padding:6px 14px;border-radius:8px;}
 .site-logo{height:26px;width:auto;display:block;}
+.nav-panel{display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
 .main-nav{display:flex;gap:24px;flex-wrap:wrap;}
 .main-nav a{font-family:'Barlow',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.02em;color:var(--text-soft);}
 .main-nav a.active,.main-nav a:hover{color:var(--text);}
-.subscribe{background:var(--green);color:#fff;font-family:'Barlow',sans-serif;font-weight:700;font-size:13px;text-transform:uppercase;padding:10px 18px;border-radius:24px;}
+.social-nav{display:flex;gap:14px;align-items:center;flex-shrink:0;}
+.social-nav a{display:flex;color:var(--text-soft);transition:color .15s ease;}
+.social-nav a:hover{color:var(--green);}
+.social-nav svg{width:20px;height:20px;}
+
+/* Botón hamburguesa: oculto en escritorio, .nav-panel nunca se colapsa
+   arriba de 900px (mismo breakpoint que el resto del sitio). */
+.nav-toggle{display:none;}
 
 /* Hero — últimas 4 notas (a=grande, b=mediana, c/d=apiladas a la derecha) */
 .hero-latest{
@@ -417,9 +425,22 @@ footer{background:var(--panel);border-top:1px solid var(--line);color:var(--text
 .pagination .page-numbers.dots:hover{background:none;color:var(--text-soft);}
 
 @media (max-width:900px){
+  /* Cintillo "última hora": en móvil no cabe categoría + título + extracto
+     sin amontonarse — se deja solo el badge y el extracto. */
+  .ticker-static{display:none;}
+
   .hero-grid,.grid-4{grid-template-columns:1fr;}
   .body-cols{grid-template-columns:1fr;}
-  .foot-grid{grid-template-columns:1fr 1fr;}
+  .ad-slot{position:static;max-width:260px;margin:0 auto;}
+  .foot-grid{grid-template-columns:1fr;}
+
+  .nota-dia-card{height:clamp(380px, 72vh, 480px);border-radius:12px;}
+  .nota-dia-content{padding:28px 24px;max-width:none;}
+  .nota-dia-title{font-size:27px;margin-bottom:18px;}
+  .nota-dia-ribbon{top:18px;font-size:11px;padding:8px 16px 8px 14px;}
+  /* El extracto amontona la tarjeta en pantallas chicas: en móvil solo se
+     muestra título + categoría + CTA. */
+  .nota-dia-dek{display:none;}
 
   /* La cuadrícula 80vh/750px del hero de últimas notas no cabe apilada en
      móvil: pasa a una columna con alturas fijas más manejables. */
@@ -436,4 +457,42 @@ footer{background:var(--panel);border-top:1px solid var(--line);color:var(--text
 
   .share-bar{gap:8px;}
   .share-btn{padding:7px 12px;font-size:12px;}
+
+  /* Header: el logo + botón hamburguesa quedan en la barra; el nav y las
+     redes sociales se pliegan en un panel debajo que se abre con el botón.
+     (header.site .wrap ya es flex-wrap:wrap por defecto — necesario para
+     que .nav-panel, con flex-basis:100%, baje a su propia línea al abrir). */
+  .nav-toggle{
+    display:flex;align-items:center;justify-content:center;
+    width:38px;height:38px;margin-left:auto;flex-shrink:0;
+    border:1px solid var(--line);border-radius:8px;background:var(--bg);
+    padding:0;cursor:pointer;
+  }
+  .nav-toggle-bars,.nav-toggle-bars::before,.nav-toggle-bars::after{
+    content:'';display:block;width:18px;height:2px;background:var(--text);
+    transition:transform .2s ease,opacity .2s ease,background .2s ease;
+  }
+  .nav-toggle-bars{position:relative;}
+  .nav-toggle-bars::before{position:absolute;top:-6px;left:0;}
+  .nav-toggle-bars::after{position:absolute;top:6px;left:0;}
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bars{background:transparent;}
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bars::before{transform:translateY(6px) rotate(45deg);}
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bars::after{transform:translateY(-6px) rotate(-45deg);}
+
+  .nav-panel{
+    display:none;flex-basis:100%;flex-direction:column;align-items:flex-start;gap:4px;
+    margin-top:16px;padding-top:16px;border-top:1px solid var(--line);
+  }
+  .nav-panel.is-open{display:flex;}
+  .main-nav{flex-direction:column;gap:2px;width:100%;}
+  .main-nav a{display:block;padding:10px 0;width:100%;}
+  .social-nav{width:100%;margin-top:8px;padding-top:12px;border-top:1px solid var(--line);}
+
+  /* En pantallas chicas el swipe táctil basta: se ocultan las flechas para
+     no perder ancho útil de las tarjetas, y se muestra una tarjeta completa
+     a la vez (en vez de dos a medias) para que el scroll horizontal sea claro. */
+  .personas-arrow{display:none;}
+  .personas-card{flex:0 0 100%;}
+  .personas-card .imgwrap{height:280px;}
+  .personas-sub{margin-left:0;}
 }
