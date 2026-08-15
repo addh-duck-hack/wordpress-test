@@ -29,9 +29,24 @@ $dereporteros_has_hero = dereporteros_has_tagged_posts( 'portada' );
 	'title'  => 'Portada',
 ] ); ?>
 
+<?php get_template_part( 'template-parts/nota-del-dia', null, [
+	'source' => 'nota-del-dia',
+	'title'  => 'Nota del día',
+] ); ?>
+
+<?php get_template_part( 'template-parts/personas-desaparecidas', null, [
+	'source' => 'personasextraviadas',
+	'title'  => 'Personas Desaparecidas',
+] ); ?>
+
 <?php get_template_part( 'template-parts/grid-section', null, [
 	'title' => 'Metrópoli y México',
 	'ids'   => $grid_ids,
+] ); ?>
+
+<?php get_template_part( 'template-parts/ad-banner', null, [
+	'source' => 'publicidad1',
+	'label'  => 'Publicidad',
 ] ); ?>
 
 <?php
@@ -51,6 +66,11 @@ get_template_part( 'template-parts/hero-latest' );
 	?>
 </section>
 <?php endif; ?>
+
+<?php get_template_part( 'template-parts/ad-banner', null, [
+	'source' => 'publicidad2',
+	'label'  => 'Publicidad',
+] ); ?>
 
 <?php if ( ! $dereporteros_has_hero && empty( $queried_ids ) ) : ?>
 <div class="wrap" style="padding:70px 0;text-align:center;color:var(--text-soft);">

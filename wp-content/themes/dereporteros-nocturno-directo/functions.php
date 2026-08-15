@@ -12,6 +12,35 @@ add_action( 'after_setup_theme', function () {
 	] );
 } );
 
+/**
+ * Oculta en todo el sitio (frontend) las notas de la categoría
+ * "sin-categoria" — típicamente entradas a las que nunca se les asignó una
+ * categoría real (incluye las notas de publicidad, ver más abajo). Se
+ * aplica a nivel de pre_get_posts en vez de en cada WP_Query del tema para
+ * que funcione igual en el cintillo, el hero, los grids, el carousel,
+ * etc. sin tener que repetir la exclusión en cada uno.
+ */
+add_action( 'pre_get_posts', function ( $query ) {
+	if ( is_admin() ) {
+		return;
+	}
+	// Excepción: las notas de publicidad viven a propósito en
+	// "sin-categoria" (solo las identifica su etiqueta 'publicidad1' /
+	// 'publicidad2'), así que las consultas de los banners no deben
+	// excluir esa categoría o se quedarían sin anuncio que mostrar.
+	if ( in_array( $query->get( 'tag' ), [ 'publicidad1', 'publicidad2' ], true ) ) {
+		return;
+	}
+	$sin_categoria = get_category_by_slug( 'sin-categoria' );
+	if ( ! $sin_categoria ) {
+		return;
+	}
+	$excluded   = $query->get( 'category__not_in' );
+	$excluded   = $excluded ? (array) $excluded : [];
+	$excluded[] = $sin_categoria->term_id;
+	$query->set( 'category__not_in', array_unique( $excluded ) );
+} );
+
 add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style(
 		'dereporteros-nocturno-directo-fonts',
@@ -107,6 +136,43 @@ if ( ! function_exists( 'dereporteros_has_tagged_posts' ) ) {
 			'update_post_term_cache'  => false,
 		] );
 		return ! empty( $query->posts );
+	}
+}
+
+if ( ! function_exists( 'dereporteros_latest_id_by_tag' ) ) {
+	/**
+	 * ID de la entrada más reciente con una etiqueta dada, o null. Query
+	 * barata usada por componentes que necesitan una sola nota (p. ej.
+	 * "nota del día", espacios publicitarios).
+	 */
+	function dereporteros_latest_id_by_tag( $tag ) {
+		$query = new WP_Query( [
+			'tag'                     => $tag,
+			'posts_per_page'          => 1,
+			'orderby'                 => 'date',
+			'order'                   => 'DESC',
+			'ignore_sticky_posts'     => true,
+			'no_found_rows'           => true,
+			'update_post_meta_cache'  => false,
+			'update_post_term_cache'  => false,
+		] );
+		return $query->posts[0]->ID ?? null;
+	}
+}
+
+if ( ! function_exists( 'dereporteros_first_link_in_content' ) ) {
+	/**
+	 * Primer link encontrado en el cuerpo de una nota, o cadena vacía si no
+	 * tiene ninguno. Usado por los espacios publicitarios dinámicos: la
+	 * nota que alimenta el banner trae, en su contenido, el link real de
+	 * destino del anuncio.
+	 */
+	function dereporteros_first_link_in_content( $post_id ) {
+		$content = get_post_field( 'post_content', $post_id );
+		if ( $content && preg_match( '/<a\s[^>]*href=["\']([^"\']+)["\']/i', $content, $matches ) ) {
+			return esc_url_raw( $matches[1] );
+		}
+		return '';
 	}
 }
 
