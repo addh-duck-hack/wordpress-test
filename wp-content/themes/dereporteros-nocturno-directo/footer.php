@@ -8,18 +8,16 @@
 <footer>
 	<div class="wrap foot-grid">
 		<div>
+			<a class="foot-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+				<img src="<?php echo esc_url( get_template_directory_uri() . '/images/logo-dereporteros.png' ); ?>" alt="<?php bloginfo( 'name' ); ?>">
+			</a>
 			<p><?php bloginfo( 'description' ); ?></p>
 		</div>
 		<div class="foot-col">
-			<h4>Secciones</h4>
-			<?php foreach ( get_categories( [ 'number' => 4 ] ) as $cat ) : ?>
-				<a href="<?php echo esc_url( get_category_link( $cat ) ); ?>"><?php echo esc_html( $cat->name ); ?></a>
-			<?php endforeach; ?>
-		</div>
-		<div class="foot-col">
 			<h4>Más</h4>
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Portada</a>
-			<a href="<?php echo esc_url( home_url( '/directorio/' ) ); ?>">Directorio</a>
+			<?php foreach ( get_pages( [ 'sort_column' => 'post_date', 'sort_order' => 'DESC' ] ) as $dereporteros_page ) : ?>
+				<a href="<?php echo esc_url( get_permalink( $dereporteros_page ) ); ?>"><?php echo esc_html( $dereporteros_page->post_title ); ?></a>
+			<?php endforeach; ?>
 		</div>
 		<div class="foot-col">
 			<h4>Síguenos</h4>
@@ -30,8 +28,8 @@
 		</div>
 	</div>
 	<div class="wrap foot-bottom">
-		<span>© <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. Todos los derechos reservados.</span>
-		<span>Diseño: <a href="https://mx.duck-hack.cloud" target="_blank" rel="noopener">Duck-Hack.cloud</a></span>
+		<span>© <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. Todos los derechos del contenido reservados.</span>
+		<span>Designed by <a href="https://mx.duck-hack.cloud" target="_blank" rel="noopener">Duck-Hack</a></span>
 	</div>
 </footer>
 
