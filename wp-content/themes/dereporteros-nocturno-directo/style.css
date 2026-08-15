@@ -172,13 +172,24 @@ header.site .wrap{display:flex;align-items:center;justify-content:space-between;
 
 /* Relleno para el hueco que queda bajo las mini-cards de .hero-side (el
    grid la estira a la altura de .hero-main, pero 3 mini-cards casi nunca
-   la llenan): la última nota etiquetada "cdmx", con la imagen partida a
-   la mitad —mapa de la ciudad / foto de la nota— para que se distinga a
-   simple vista del resto de tarjetas del hero. */
+   la llenan): la última nota etiquetada "cdmx", con el mapa de la ciudad
+   superpuesto sobre la foto de la nota y desvanecido en degradado (ver
+   .hero-cdmx-map) para que se distinga a simple vista del resto de
+   tarjetas del hero. */
 .hero-cdmx{flex:1;min-height:130px;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
-.hero-cdmx-media{display:flex;flex:1;min-height:76px;}
-.hero-cdmx-media img{width:50%;height:100%;object-fit:cover;display:block;}
-.hero-cdmx-map{filter:grayscale(.25) brightness(.85);}
+.hero-cdmx-media{position:relative;flex:1;min-height:76px;}
+.hero-cdmx-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.hero-cdmx-thumb{z-index:1;}
+/* El mapa va encima, a tamaño completo, pero una máscara en degradado lo
+   desvanece de izquierda a derecha: opaco hasta ~35% del ancho y ya
+   transparente del todo a partir de ~70%, así se funde gradualmente con
+   la foto de la nota en vez de cortarse de golpe a la mitad. */
+.hero-cdmx-map{
+  z-index:2;
+  filter:grayscale(.25) brightness(.85);
+  -webkit-mask-image:linear-gradient(to right, #000 0%, #000 35%, transparent 70%);
+  mask-image:linear-gradient(to right, #000 0%, #000 35%, transparent 70%);
+}
 .hero-cdmx-body{padding:12px 14px;}
 .hero-cdmx-body .pill{margin-bottom:6px;}
 .hero-cdmx-body h3{font-size:14px;line-height:1.32;font-weight:700;color:var(--text);}

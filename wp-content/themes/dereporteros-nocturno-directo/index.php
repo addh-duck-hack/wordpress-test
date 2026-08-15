@@ -60,6 +60,11 @@ $dereporteros_has_hero = dereporteros_has_tagged_posts( 'portada' );
 get_template_part( 'template-parts/hero-latest' );
 ?>
 
+<?php get_template_part( 'template-parts/grid-section', null, [
+	'title'  => 'Fotografía',
+	'source' => 'fotografia',
+] ); ?>
+
 <?php if ( $trend_ids ) : ?>
 <section class="body-cols wrap">
 	<?php
@@ -71,6 +76,11 @@ get_template_part( 'template-parts/hero-latest' );
 	?>
 </section>
 <?php endif; ?>
+
+<?php get_template_part( 'template-parts/grid-section', null, [
+	'title'  => 'Seguridad',
+	'source' => 'seguridad',
+] ); ?>
 
 <?php if ( ! $dereporteros_has_hero && empty( $queried_ids ) ) : ?>
 <div class="wrap" style="padding:70px 0;text-align:center;color:var(--text-soft);">

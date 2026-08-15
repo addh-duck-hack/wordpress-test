@@ -78,8 +78,8 @@ if ( $hero_id ) :
 			<?php if ( $dereporteros_cdmx_id ) : ?>
 			<a class="hero-cdmx" href="<?php echo esc_url( get_permalink( $dereporteros_cdmx_id ) ); ?>">
 				<div class="hero-cdmx-media">
-					<img class="hero-cdmx-map" src="<?php echo esc_url( get_template_directory_uri() . '/images/mapa-cdmx.jpg' ); ?>" alt="" aria-hidden="true">
 					<img class="hero-cdmx-thumb" src="<?php echo esc_url( dereporteros_thumb_src( $dereporteros_cdmx_id, 'medium' ) ); ?>" alt="">
+					<img class="hero-cdmx-map" src="<?php echo esc_url( get_template_directory_uri() . '/images/mapa-cdmx.jpg' ); ?>" alt="" aria-hidden="true">
 				</div>
 				<div class="hero-cdmx-body">
 					<span class="pill <?php echo esc_attr( dereporteros_pill_class( 2 ) ); ?>"><?php echo esc_html( dereporteros_category_name( $dereporteros_cdmx_id ) ); ?></span>
