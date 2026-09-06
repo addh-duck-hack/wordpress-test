@@ -355,6 +355,8 @@ footer{background:var(--green-deep);color:#B9CFC1;padding:40px 0 22px;}
 .single-wrap .meta-mono{display:block;margin-bottom:22px;}
 .single-wrap .content{font-size:16px;line-height:1.75;color:var(--ink);}
 .single-wrap .content p{margin:0 0 20px;}
+.single-wrap .content a{color:var(--green);text-decoration:underline;text-underline-offset:2px;}
+.single-wrap .content a:hover{color:var(--ink);}
 
 /* Cabecera de la entrada superpuesta sobre la imagen destacada: categoría,
    título, autor y fecha van encima de la foto con un scrim en degradado que
