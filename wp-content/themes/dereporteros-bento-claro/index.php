@@ -48,7 +48,7 @@ $dereporteros_has_hero    = dereporteros_has_tagged_posts( 'portada' );
 	'title'  => 'Metrópoli',
 ] ); ?>
 
-<?php get_template_part( 'template-parts/ad-banner', null, [
+<?php get_template_part( 'template-parts/promo-banner', null, [
 	'source' => 'publicidad1',
 	'label'  => 'Publicidad',
 ] ); ?>
@@ -67,7 +67,7 @@ $dereporteros_has_hero    = dereporteros_has_tagged_posts( 'portada' );
 <section class="lower wrap">
 	<?php
 	get_template_part( 'template-parts/latest-feed', null, [ 'title' => 'Más leídas', 'ids' => $feed_ids ] );
-	get_template_part( 'template-parts/ad-banner-side', null, [
+	get_template_part( 'template-parts/promo-banner-side', null, [
 		'source' => 'publicidad2',
 		'label'  => 'Publicidad',
 	] );
