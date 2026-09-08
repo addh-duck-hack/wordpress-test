@@ -23,66 +23,73 @@ $feed_ids    = array_slice( $queried_ids, 0, 4 );
 // Se calcula aparte (antes del hero) solo para poder excluir esta nota de
 // la recomendación aleatoria del hero; el componente de "Nota del día" hace
 // su propia consulta al imprimirse más abajo.
-$dereporteros_nota_dia_id = dereporteros_latest_id_by_tag( 'nota-del-dia' );
-$dereporteros_has_hero    = dereporteros_has_tagged_posts( 'portada' );
+$dereporteros_nota_dia_id = dereporteros_latest_id_by_tag(
+	get_theme_mod( 'dereporteros_home_notadia_source', 'nota-del-dia' )
+);
+$dereporteros_has_hero    = dereporteros_has_tagged_posts(
+	get_theme_mod( 'dereporteros_home_hero_source', 'portada' )
+);
 ?>
 
 <?php get_template_part( 'template-parts/hero', null, [
-	'source'  => 'portada',
-	'title'   => 'Portada',
+	'source'  => get_theme_mod( 'dereporteros_home_hero_source', 'portada' ),
+	'title'   => get_theme_mod( 'dereporteros_home_hero_title', 'Portada' ),
 	'exclude' => [ $dereporteros_nota_dia_id ],
 ] ); ?>
 
 <?php get_template_part( 'template-parts/nota-del-dia', null, [
-	'source' => 'nota-del-dia',
-	'title'  => 'Nota del día',
+	'source' => get_theme_mod( 'dereporteros_home_notadia_source', 'nota-del-dia' ),
+	'title'  => get_theme_mod( 'dereporteros_home_notadia_title', 'Nota del día' ),
 ] ); ?>
 
 <?php get_template_part( 'template-parts/personas-desaparecidas', null, [
-	'source' => 'personasextraviadas',
-	'title'  => 'Personas Desaparecidas',
+	'source' => get_theme_mod( 'dereporteros_home_personas_source', 'personasextraviadas' ),
+	'title'  => get_theme_mod( 'dereporteros_home_personas_title', 'Personas Desaparecidas' ),
 ] ); ?>
 
 <?php get_template_part( 'template-parts/grid-section', null, [
-	'source' => 'metropoli',
-	'title'  => 'Metrópoli',
+	'source' => get_theme_mod( 'dereporteros_home_metropoli_source', 'metropoli' ),
+	'title'  => get_theme_mod( 'dereporteros_home_metropoli_title', 'Metrópoli' ),
 ] ); ?>
 
 <?php get_template_part( 'template-parts/promo-banner', null, [
-	'source' => 'publicidad1',
-	'label'  => 'Publicidad',
+	'source' => get_theme_mod( 'dereporteros_home_promo1_source', 'publicidad1' ),
+	'label'  => get_theme_mod( 'dereporteros_home_promo1_label', 'Publicidad' ),
 ] ); ?>
 
 <?php get_template_part( 'template-parts/hero-latest', null, [
-	'source' => 'espectaculos',
-	'title'  => 'Espectáculos',
+	'source' => get_theme_mod( 'dereporteros_home_herolatest_source', 'espectaculos' ),
+	'title'  => get_theme_mod( 'dereporteros_home_herolatest_title', 'Espectáculos' ),
 ] ); ?>
 
 <?php get_template_part( 'template-parts/grid-section', null, [
-	'source' => 'fotografia',
-	'title'  => 'Fotografía',
+	'source' => get_theme_mod( 'dereporteros_home_fotografia_source', 'fotografia' ),
+	'title'  => get_theme_mod( 'dereporteros_home_fotografia_title', 'Fotografía' ),
 ] ); ?>
 
 <?php if ( $feed_ids ) : ?>
 <section class="lower wrap">
 	<?php
-	get_template_part( 'template-parts/latest-feed', null, [ 'title' => 'Más leídas', 'ids' => $feed_ids ] );
+	get_template_part( 'template-parts/latest-feed', null, [
+		'title' => get_theme_mod( 'dereporteros_home_feed_title', 'Más leídas' ),
+		'ids'   => $feed_ids,
+	] );
 	get_template_part( 'template-parts/promo-banner-side', null, [
-		'source' => 'publicidad2',
-		'label'  => 'Publicidad',
+		'source' => get_theme_mod( 'dereporteros_home_promo2_source', 'publicidad2' ),
+		'label'  => get_theme_mod( 'dereporteros_home_promo2_label', 'Publicidad' ),
 	] );
 	?>
 </section>
 <?php endif; ?>
 
 <?php get_template_part( 'template-parts/grid-section', null, [
-	'source' => 'seguridad',
-	'title'  => 'Seguridad',
+	'source' => get_theme_mod( 'dereporteros_home_seguridad_source', 'seguridad' ),
+	'title'  => get_theme_mod( 'dereporteros_home_seguridad_title', 'Seguridad' ),
 ] ); ?>
 
 <?php get_template_part( 'template-parts/grid-section', null, [
-	'source' => 'clima',
-	'title'  => 'Clima',
+	'source' => get_theme_mod( 'dereporteros_home_clima_source', 'clima' ),
+	'title'  => get_theme_mod( 'dereporteros_home_clima_title', 'Clima' ),
 ] ); ?>
 
 <?php if ( ! $dereporteros_has_hero && empty( $queried_ids ) ) : ?>

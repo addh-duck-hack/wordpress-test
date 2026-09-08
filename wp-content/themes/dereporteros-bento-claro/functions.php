@@ -3,6 +3,8 @@
  * Setup del tema de propuesta "Bento Claro" para De Reporteros.
  */
 
+require get_template_directory() . '/inc/customizer.php';
+
 add_action( 'after_setup_theme', function () {
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
@@ -25,9 +27,17 @@ add_action( 'pre_get_posts', function ( $query ) {
 	}
 	// Excepción: las notas de publicidad viven a propósito en
 	// "sin-categoria" (solo las identifica su etiqueta 'publicidad1' /
-	// 'publicidad2'), así que las consultas de los banners no deben
-	// excluir esa categoría o se quedarían sin anuncio que mostrar.
-	if ( in_array( $query->get( 'tag' ), [ 'publicidad1', 'publicidad2' ], true ) ) {
+	// 'publicidad2' — o lo que se haya configurado en Personalizar →
+	// Portada, de ahí que se lea con get_theme_mod() y no como literal:
+	// si alguien cambia la etiqueta de un banner ahí, esta excepción
+	// tiene que seguir reconociéndola), así que las consultas de los
+	// banners no deben excluir esa categoría o se quedarían sin anuncio
+	// que mostrar.
+	$dereporteros_promo_tags = [
+		get_theme_mod( 'dereporteros_home_promo1_source', 'publicidad1' ),
+		get_theme_mod( 'dereporteros_home_promo2_source', 'publicidad2' ),
+	];
+	if ( in_array( $query->get( 'tag' ), $dereporteros_promo_tags, true ) ) {
 		return;
 	}
 	$sin_categoria = get_category_by_slug( 'sin-categoria' );

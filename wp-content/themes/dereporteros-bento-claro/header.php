@@ -14,8 +14,8 @@
 
 <div class="site-topbar">
 <?php get_template_part( 'template-parts/ticker', null, [
-	'source' => 'ultima-hora',
-	'title'  => 'Última hora',
+	'source' => get_theme_mod( 'dereporteros_home_ticker_source', 'ultima-hora' ),
+	'title'  => get_theme_mod( 'dereporteros_home_ticker_title', 'Última hora' ),
 ] ); ?>
 
 <header class="site">
