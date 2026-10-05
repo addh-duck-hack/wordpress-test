@@ -39,12 +39,14 @@ services:
     # igual que en peajemexico. No se expone nada al host.
     networks:
       - npm
-      - wordpress-multisite
 
 networks:
-  wordpress-multisite:
-    name: wordpress-multisite
-    driver: bridge
+  # Solo la red externa de Nginx Proxy Manager: por ahí llegan NPM y también el
+  # MySQL compartido (mysql_db, alias "db"). La red bridge propia que había
+  # (wordpress-multisite) solo tenía este contenedor y gastaba un rango del pool
+  # de IPs de Docker, compartido por todos los proyectos del servidor; al
+  # agotarse, `compose up` falla con "all predefined address pools have been
+  # fully subnetted". Si quedó huérfana: `docker network rm wordpress-multisite`.
   npm:
     external: true
 
