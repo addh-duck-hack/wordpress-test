@@ -29,7 +29,7 @@
 	</div>
 	<div class="wrap foot-bottom">
 		<span>© <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. Todos los derechos del contenido reservados.</span>
-		<span>Designed by <a href="https://mx.duck-hack.cloud" target="_blank" rel="noopener">Duck-Hack</a></span>
+		<span>Designed by <a href="https://duck-hack.cloud" target="_blank" rel="noopener">Duck-Hack</a></span>
 	</div>
 </footer>
 
